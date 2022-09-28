@@ -1,0 +1,150 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">جزئیات محتوا</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p class="col-green body2-bold cursor-pointer title" routerLink="/blog/list">بازگشت</p>
+  </div>
+</div>
+
+<div class="table-body">
+  <div class="row display-inputs">
+    <div [formGroup]="formContent" class="input-box mb-input">
+      <p class="Caption1-medium col-97 text-label">عنوان <span style="color: red">*</span></p>
+      <input
+        class="body1-medium"
+        formControlName="title"
+        type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box p-0 mb-input" style="border: unset">
+      <p class="Caption1-medium col-97 text-label">دسته بندی <span style="color: red">*</span></p>
+      <mat-select
+        (ngModelChange)="blogCategoriesOne"
+        (selectionChange)="getBlogCategory($event)"
+        [(ngModel)]="blogCategoriesOne" [(value)]="blogCategoriesOne"
+        [formControl]="categoryControl"
+        class="persianNum-bold-14 category">
+        <mat-option *ngFor="let category of categories" [value]="category.id"
+                    class="persianNum-bold-14">{{category.title}}</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box p-0 mb-input" style="border: unset">
+      <p class="Caption1-medium col-97 text-label">زیر دسته بندی <span style="color: red">*</span></p>
+      <mat-select
+        (ngModelChange)="subBlogCategoriesOne"
+        [(ngModel)]="subBlogCategoriesOne" [(value)]="subBlogCategoriesOne"
+        [formControl]="subCategoryControl"
+        class="persianNum-bold-14 category">
+        <mat-option *ngFor="let category of subCategories" [value]="category.id"
+                    class="persianNum-bold-14">{{category.title}}</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mb-input">
+      <p class="Caption1-medium col-97 text-label">نویسنده <span style="color: red">*</span></p>
+      <input [formControl]="docCtrl" [matAutocomplete]="auto"
+             class="body1-medium"
+             matInput
+             type="text">
+      <mat-autocomplete #auto="matAutocomplete" class="body1-medium">
+        <mat-option (onSelectionChange)="setDocId(doc.id)" *ngFor="let doc of filteredDoctors | async"
+                    [value]="doc.firstName + ' ' + doc.lastName"
+                    class="body1-medium">
+          {{doc.firstName + " " + doc.lastName}}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <div class="input-box-tag col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr pt-3 pb-3">
+      <p class="Caption1-medium col-97 text-label">برچسب‌ها <span style="color: red">*</span></p>
+      <mat-chip-list #chipList>
+        <mat-chip (removed)="remove(tag)" *ngFor="let tag of tags" class="body1-medium">
+          {{tag}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          (matChipInputTokenEnd)="add($event)" [matChipInputAddOnBlur]="addOnBlur"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" class="body1-medium">
+      </mat-chip-list>
+    </div>
+    <p class="col-97 body2-light text-right">با زدن کلید enter برچسب های خود را ثبت کنید</p>
+
+    <div *ngIf="!coverImg && !blog.thumbnail"
+         class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input upload-input">
+      <p class="Caption1-medium col-97 text-label">کاور محتوا <span style="color: red">*</span></p>
+      <label class="form form-group d-flex justify-content-center cursor-pointer" data-action="change"
+             data-toggle="tooltip">
+        <p class="col-97 body1-medium upload-text">آپلود</p>
+        <input (change)="acceptCoverImg($event); readURL($event)"
+               accept="image/png,image/jpg,image/jpeg"
+               class="d-none" type="file"/>
+      </label>
+    </div>
+
+    <div *ngIf="coverImg || blog.thumbnail"
+         class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr mt-input image-box p-0" data-action="change"
+         data-toggle="tooltip">
+      <img *ngIf="coverImg" [src]="(imageSrc)" alt="coverImg" class="image-tag">
+      <img *ngIf="blog.thumbnail && !coverImg" [src]="(blog.thumbnail)" alt="coverImg" class="image-tag">
+      <label class="form form-group d-flex justify-content-center cursor-pointer m-0" data-action="change"
+             data-toggle="tooltip">
+        <p class="col-97 body1-medium upload-text m-0">تغییر عکس</p>
+        <input (change)="acceptCoverImg($event); readURL($event)"
+               accept="image/png,image/jpg,image/jpeg"
+               class="d-none" type="file"/>
+      </label>
+    </div>
+
+    <div *ngIf="!coverVideo && !blog.isHaveVideo"
+         class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input upload-input">
+      <p class="Caption1-medium col-97 text-label">ویدیو</p>
+      <label class="form form-group d-flex justify-content-center cursor-pointer" data-action="change"
+             data-toggle="tooltip">
+        <p class="col-97 body1-medium upload-text">آپلود</p>
+        <input (change)="acceptCoverVideo($event); onSelectFile($event)"
+               accept="video/mp4,video/x-m4v,video/*"
+               class="d-none" type="file"/>
+      </label>
+    </div>
+
+    <div *ngIf="coverVideo || blog.isHaveVideo"
+         class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr mt-input image-box p-0">
+      <video *ngIf="url && coverVideo" [src]="url" class="image-tag" controls></video>
+      <video *ngIf="blog.video && !coverVideo" [src]="blog.video" class="image-tag" controls></video>
+      <label class="form form-group d-flex justify-content-center cursor-pointer m-0" data-action="change"
+             data-toggle="tooltip">
+        <p class="col-97 body1-medium upload-text m-0">تغییر ویدیو</p>
+        <input (change)="acceptCoverVideo($event); onSelectFile($event)"
+               accept="video/mp4,video/x-m4v,video/*"
+               class="d-none" type="file"/>
+      </label>
+    </div>
+  </div>
+</div>
+
+<div [formGroup]="formContent" class="card">
+  <p class="col-33 body1-medium title">متن محتوا <span style="color: red">*</span></p>
+  <div class="mb-3">
+    <ckeditor
+      (ready)="onReadyCkEditor($event)"
+      [config]="config"
+      [editor]="Editor"
+      formControlName="content">
+    </ckeditor>
+  </div>
+  <div class="d-flex flex-row justify-content-center w-100" style="position: absolute; bottom: -23px;left: 0">
+    <button (click)="update()"
+            [disabled]="sending || loading || formContent.invalid || tags.length < 1 || subBlogCategoriesOne == '' || blogCategoriesOne == ''"
+            class="submit body1-medium">
+      <span *ngIf="!sending && !loading">ذخیره تغییرات</span>
+      <span *ngIf="sending || loading"><i class="spinner-border col-green"></i></span>
+    </button>
+  </div>
+</div>
+<!--[disabled]="sending || loading || formContent.invalid || blogCategories.length < 1 || tags.length < 1 || docId == '' || !coverImg"-->
+

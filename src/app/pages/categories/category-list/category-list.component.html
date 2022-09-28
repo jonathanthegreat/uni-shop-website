@@ -1,0 +1,79 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body1-medium title">مدیریت دسته‌بندی</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p class="col-green body1-medium title cursor-pointer" routerLink="/category/add">افزودن دسته‌بندی</p>
+  </div>
+</div>
+<div class="table-body">
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <!--<th scope="col">#</th>-->
+      <th scope="col">عنوان دسته‌بندی</th>
+      <th scope="col"> تعداد زیر دسته‌بندی</th>
+      <th scope="col">زمان
+      </th>
+      <th scope="col">جزئیات
+      </th>
+    </tr>
+    </thead>
+    <tbody
+      class="persianNum-medium-16 line-height">
+    <tr *ngFor="let category of categories; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <!--<th scope="row">{{(i + 1) + ((page - 1) * pageSize) }}</th>-->
+      <td>{{(category?.title) ? category?.title : 'وارد نشده'}}</td>
+      <td>{{(category?.children?.length) ? category?.children?.length : 'ندارد'}}</td>
+      <td>{{(category?.created) ? globalVariableService.convertDate(category?.created, 'fa', 'jYYYY/jMM/jDD') : 'وارد نشده'}}</td>
+      <td>
+        <div class="d-flex flex-row" style="justify-content: center;margin-right: 29px;">
+          <img class="cursor-pointer" routerLink="/category/detail/{{category?.id}}"
+               src="assets/media/icons/insurance/edit-insurance.svg">
+          <img (click)="openDialog(removeModal, category?.id)" class="cursor-pointer mx-4"
+               src="assets/media/icons/insurance/delete-insurance.svg">
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="categories && categories!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">دسته بندی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #removeModal let-data>
+  <div>
+    <div class="d-flex flex-row justify-content-between">
+      <div class="d-flex flex-row align-items-center " style="height: 47px">
+        <img (click)="dialogRef.close()" class="mx-2 mb-2 cursor-pointer" src="assets/media/images/svg/comment/back.svg"
+             style="width: 22px;height: 15px">
+        <p class="body1-bold col-33">حذف دسته بندی</p>
+      </div>
+    </div>
+    <hr>
+    <p class="body2-medium col-33" style="overflow-y: auto">
+      آیا از حذف دسته بندی مطمعن هستید؟
+    </p>
+    <div class="row d-flex flex-row justify-content-between">
+      <button (click)="removeCategory(data.id)" [disabled]="loadingDelete"
+              class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr remove body1-medium d-flex flex-row"
+              style="background-color: #FFFFFF; border-radius: 14px !important;height: 48px">بلی
+        <span *ngIf="loadingDelete" class="spinner spinner-danger"></span>
+      </button>
+      <button (click)="dialogRef.close()"
+              class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr back body1-medium my-remove">خیر
+      </button>
+
+    </div>
+  </div>
+</ng-template>
+

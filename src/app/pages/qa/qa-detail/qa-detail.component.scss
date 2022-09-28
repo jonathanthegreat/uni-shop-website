@@ -1,0 +1,101 @@
+.title {
+  position: absolute;
+  top: -10px;
+  background-color: #ffffff !important;
+  padding: 0 5px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.back-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+mat-select {
+  height: 48px !important;
+  background-color: #ffffff !important;
+  // position: absolute !important;
+  width: 300px !important;
+  padding: 11px !important;
+}
+
+.tag {
+  padding: 8px;
+  width: fit-content;
+  background: #FFFFFF;
+  border: 0.5px solid #9F39C1;
+  border-radius: 28px;
+  height: 36px;
+  color: #9F39C1;
+}
+
+#cont {
+  background: -webkit-linear-gradient(left top, #00AA7E, #A03AC1);
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#box {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}
+
+.regular-like {
+  width: 160px;
+  background: #ffffff;
+  border: 1px solid #00AA7E;
+  border-radius: 14px;
+  padding: 12px 18px 12px 18px;
+  color: #00AA7E;
+}
+
+.regular-disLike {
+  width: 160px;
+  background: #ffffff;
+  border: 1px solid #DB0049;
+  border-radius: 14px;
+  padding: 12px 18px 12px 18px;
+  color: #DB0049;
+}
+
+.w32px {
+  width: 32px;
+  height: 32px;
+}
+
+.mt-select {
+  margin-top: unset;
+}
+
+.mt-input {
+  margin-top: unset;
+}
+
+@media (max-width: 768px) {
+  .mt-select {
+    margin-top: 24px;
+  }
+
+  .mt-input {
+    margin-top: 12px;
+  }
+
+  mat-select {
+    height: 48px !important;
+    background-color: #ffffff !important;
+    // position: absolute !important;
+    width: 100% !important;
+    padding: 11px !important;
+  }
+}

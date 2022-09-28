@@ -1,0 +1,20 @@
+.w-chart {
+  width: 100%;
+  overflow: unset;
+}
+
+.cards {
+  height: 100px;
+  margin: 20px 20px 0 20px;
+  padding: 24px;
+  border-radius: 14px;
+}
+
+@media (max-width: 768px) {
+
+  .w-chart {
+    width: 1000px;
+    overflow: scroll;
+  }
+
+}

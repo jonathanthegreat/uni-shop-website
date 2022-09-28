@@ -1,0 +1,116 @@
+<div *ngIf="mode == 'view'" class="card">
+  <p class="col-green title body2-bold">لیست سوالات متداول</p>
+  <div (click)="openDialog(addModel, null, null, null)" class="d-flex flex-row justify-content-end">
+    <p class="col-green title body2-bold cursor-pointer">افزودن سوال</p>
+  </div>
+
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+
+  <div *ngIf="faqList && faqList!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">سوالی وجود ندارد</p>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && faqList && faqList!.length > 0">
+    <div *ngFor="let faq of faqList; let lastItem = last" class="body2-medium col-40">
+      <div class="d-flex justify-content-between">
+        <div style="width: 80%">
+          <p>سوال: <span>{{faq?.question}}</span></p>
+          <p>جواب: <span>{{faq?.answer}}</span></p>
+        </div>
+        <div class="d-flex align-items-center">
+          <img (click)="openDialog(editModel, faq?.id , faq?.question, faq?.answer)" class="img-edit cursor-pointer"
+               src="assets/media/icons/insurance/edit-insurance.svg">
+          <img (click)="openDialog(deleteModal, faq?.id , faq?.question, faq?.answer)" class="img-edit cursor-pointer"
+               src="assets/media/icons/insurance/delete-insurance.svg">
+        </div>
+      </div>
+      <hr *ngIf="!lastItem">
+    </div>
+  </div>
+
+  <div (click)="goToArrange()" *ngIf="!loading && faqList && faqList!.length > 0"
+       class="d-flex flex-row justify-content-center">
+    <button class="reArrange body1-medium col-green">تغییر چیدمان</button>
+  </div>
+</div>
+
+<div *ngIf="mode == 'arrange'" class="card">
+  <div (cdkDropListDropped)="drop($event)" cdkDropList class="example-list">
+    <p class="col-green title body2-bold">تغییر چیدمان سوالات متداول</p>
+    <div class="d-flex flex-row justify-content-end">
+      <p (click)="goBack()" class="col-green title body2-bold cursor-pointer">بازگشت</p>
+    </div>
+    <div *ngFor="let faq of faqList" cdkDrag class="example-box">
+      <img alt="ReArrange" class="reArrange-icon" src="assets/media/icons/faq/reArrange.svg">
+      <div class="body2-medium col-40" style="width: 90%">
+        <p>سوال: <span>{{faq?.question}}</span></p>
+        <p>جواب: <span>{{faq?.answer}}</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editModel let-data>
+  <div [formGroup]="editForm">
+    <p class="body1-bold col-33">ویرایش سوال متداول</p>
+    <div class="input-box mb-5">
+      <p class="Caption1-medium col-97 text-label">سوال</p>
+      <textarea class="body2-medium form form-group mt-2 w-100" formControlName="question"
+                placeholder="سوال را وارد کنید"></textarea>
+    </div>
+    <div class="input-box mb-4">
+      <p class="Caption1-medium col-97 text-label">جواب</p>
+      <textarea class="body2-medium form form-group mt-1 w-100" formControlName="answer"
+                placeholder="جواب را وارد کنید"></textarea>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="editField(data.faqId)" [disabled]="loadingAdd || !editForm.dirty || editForm.invalid"
+              class="edit body2-medium">
+        <span *ngIf="!loadingAdd">بروزرسانی</span>
+        <span *ngIf="loadingAdd"><i class="spinner spinner-warning"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addModel>
+  <div [formGroup]="addForm">
+    <p class="body1-bold col-33">افزودن سوال متداول</p>
+    <div class="input-box mb-5">
+      <p class="Caption1-medium col-97 text-label">سوال</p>
+      <textarea class="body2-medium form form-group mt-2 w-100" formControlName="question"
+                placeholder="سوال را وارد کنید"></textarea>
+    </div>
+    <div class="input-box mb-4">
+      <p class="Caption1-medium col-97 text-label">جواب</p>
+      <textarea class="body2-medium form form-group mt-1 w-100" formControlName="answer"
+                placeholder="جواب را وارد کنید"></textarea>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="createField()" [disabled]="loadingAdd || addForm.invalid" class="add body2-medium">
+        <span *ngIf="!loadingAdd">تایید</span>
+        <span *ngIf="loadingAdd"><i class="spinner-border"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-data style="width: 300px !important;">
+  <p class="body1-bold col-33 mb-0">حذف سوال متداول</p>
+  <p class="mt-2 body2-bold col-40 mt-2" style="word-break: break-word">آیا از حذف "{{data?.questionField}}" مطمئن
+    هستید؟</p>
+  <div class="d-flex flex-row justify-content-between mt-4">
+    <button (click)="close()" class="back body2-medium">بازگشت</button>
+    <button (click)="removeField(data?.faqId)" [disabled]="loadingAdd" class="delete body2-medium">
+      <span *ngIf="!loadingAdd">حذف</span>
+      <span *ngIf="loadingAdd"><i class="spinner spinner-danger"></i></span>
+    </button>
+  </div>
+</ng-template>

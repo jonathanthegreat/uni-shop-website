@@ -1,0 +1,12 @@
+<div class="card">
+  <div (cdkDropListDropped)="drop($event)" cdkDropList class="example-list">
+    <p class="col-green title body2-bold">تغییر چیدمان صفحات</p>
+    <p class="persianNum-medium-14">پنج آیتم اول در وبسایت نمایش داده می شود</p>
+    <div *ngFor="let page of dynamicPages" cdkDrag class="example-box">
+      <img alt="ReArrange" class="reArrange-icon" src="assets/media/icons/faq/reArrange.svg">
+      <div class="body2-medium col-40" style="width: 90%;margin-right: 10px;margin-top: 9px;">
+        <p>{{page.name}}</p>
+      </div>
+    </div>
+  </div>
+</div>

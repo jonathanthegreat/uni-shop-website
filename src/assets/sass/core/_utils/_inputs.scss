@@ -1,0 +1,32 @@
+.input-mom {
+  outline: none;
+  height: 48px;
+  border: 1px solid #979797;
+  box-sizing: border-box;
+  border-radius: 14px;
+  padding: 12px 18px 12px 18px;
+}
+
+.input-mom:focus {
+  height: 48px;
+  border: 1px solid #00AA7E !important;
+  box-sizing: border-box;
+  border-radius: 14px;
+}
+
+.input-mom:active {
+  height: 48px;
+  border: 1px solid #00AA7E;
+  box-sizing: border-box;
+  border-radius: 14px;
+}
+
+.input-mom-error {
+  outline: none;
+  height: 48px;
+  border: 1px solid #FF4848;
+  box-sizing: border-box;
+  border-radius: 14px;
+}
+
+

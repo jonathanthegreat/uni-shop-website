@@ -1,0 +1,20 @@
+<div class="w-100 vh-100 d-flex justify-content-center align-items-center">
+  <div class="login-card">
+    <div class="d-flex justify-content-center">
+      <img class="momImg" src="assets/media/images/svg/header/LOGOTYPE.svg">
+    </div>
+    <p class="title1-bold mt-5 col-green">پنل مدیریت مام</p>
+    <p class="body2-medium col-97">نام کاربری و کلمه عبور را جهت ورود وارد نمایید</p>
+    <form [formGroup]="loginForm">
+      <input [regex]="globalVariableService.USER_NAME_REGEX" class="input-mom w-100 mt-3 body1-medium form-control"
+             formControlName="username" placeholder="نام کاربری">
+      <input (keydown.enter)="submit()" class="input-mom w-100 mt-3 body1-medium form-control"
+             formControlName="password" placeholder="کلمه عبور" type="password">
+      <button (click)="submit()" [disabled]="loginForm.invalid"
+              class="green-button w-100 mt-4 login-btn body1-medium" type="button">
+        <span *ngIf="!loading">ورود</span>
+        <span *ngIf="loading"><i class="spinner-border text-white"></i></span>
+      </button>
+    </form>
+  </div>
+</div>

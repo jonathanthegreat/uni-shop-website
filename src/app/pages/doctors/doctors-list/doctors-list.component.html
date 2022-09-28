@@ -1,0 +1,112 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست پزشکان</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p class="col-green body2-bold cursor-pointer title" routerLink="/doctors/add">افزودن پزشک</p>
+  </div>
+</div>
+<div class="table-body">
+  <!--  <div class="col-green  d-flex flex-row justify-content-end class-label " ><p
+      class="body2-bold cursor-pointer">
+      افزودن
+    </p></div>-->
+  <div [formGroup]="searchForm" class="d-flex justify-content-between">
+    <mat-tab-group (selectedIndexChange)="filter($event, 'html')" [selectedIndex]="selectedIndex"
+                   style="z-index: 0; margin-left: 32px">
+      <mat-tab label="همه"></mat-tab>
+      <mat-tab label="فعال"></mat-tab>
+      <mat-tab label="در حال بررسی"></mat-tab>
+      <mat-tab label="مسدود"></mat-tab>
+    </mat-tab-group>
+    <input (ngModelChange)="searchMentorTextChanged.next($event)" [(ngModel)]="searchMentorText"
+           class="input-mom body2-medium"
+           formControlName="search" placeholder="جستجو در پزشکان" style="min-width: 335px" type="search">
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <!--<th scope="col">#</th>-->
+      <th scope="col">عکس</th>
+      <th scope="col">نام پزشک</th>
+      <th scope="col">تاریخ تولد
+        <img (click)="sort('age', 'ASC')" *ngIf="sortBy!='age'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('age', 'ASC')" *ngIf="direction=='DESC' && sortBy=='age'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('age', 'DESC')" *ngIf="direction=='ASC' && sortBy=='age'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">
+      </th>
+      <th scope="col">موبایل</th>
+      <th scope="col">قیمت آنلاین
+        <img (click)="sort('onlinePrice', 'ASC')" *ngIf="sortBy!='onlinePrice'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('onlinePrice', 'ASC')" *ngIf="direction=='DESC' && sortBy=='onlinePrice'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('onlinePrice', 'DESC')" *ngIf="direction=='ASC' && sortBy=='onlinePrice'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">
+      </th>
+      <th scope="col">قیمت آفلاین
+        <img (click)="sort('offlinePrice', 'ASC')" *ngIf="sortBy!='offlinePrice'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('offlinePrice', 'ASC')" *ngIf="direction=='DESC' && sortBy=='offlinePrice'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('offlinePrice', 'DESC')" *ngIf="direction=='ASC' && sortBy=='offlinePrice'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">
+      </th>
+      <th scope="col">امتیاز</th>
+      <th scope="col">وضعیت</th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="doctors.content && doctors.content!.length > 0 && !loading" class="persianNum-medium-16 line-height">
+    <tr *ngFor="let doctor of doctors.content; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <!--<th scope="row">{{(i + 1) + ((page - 1) * pageSize) }}</th>-->
+      <td>
+        <div class="doc-img-body d-flex justify-content-center align-items-center">
+          <img
+            [src]="(doctor.profileImage) ? (doctor.profileImage) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+            alt="img" class="doc-img">
+        </div>
+      </td>
+      <td>{{(doctor.firstName + ' ' + doctor.lastName) || 'وارد نشده'}}</td>
+      <td>{{(doctor.bdate) ? globalVariableService.convertDate(doctor.bdate, 'fa', 'jYYYY/jMM/jDD') : 'وارد نشده'}}</td>
+      <td>{{doctor.mobile || 'وارد نشده'}}</td>
+      <td>{{doctor.onlinePriceFormatted || 'وارد نشده'}}</td>
+      <td>{{doctor.offlinePriceFormatted || 'وارد نشده'}}</td>
+      <td>{{doctor.rate || 'وارد نشده'}}</td>
+      <td *ngIf="doctor.status == 'BANNED'" class="body2-medium">
+        <div class="status-table status-table-canceled"><p>مسدود</p></div>
+      </td>
+      <td *ngIf="doctor.status == 'VERIFIED'" class="body2-medium">
+        <div class="status-table status-table-verified"><p>فعال</p></div>
+      </td>
+      <td *ngIf="doctor.status == 'NEW'" class="body2-medium">
+        <div class="status-table status-table-processing"><p>در حال بررسی</p></div>
+      </td>
+      <td class="line-height-0">
+        <button class="green-button-outLine detail-btn" routerLink="/doctors/detail/{{doctor.id}}">جزئیات</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="doctors.content && doctors.content!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">پزشکی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>

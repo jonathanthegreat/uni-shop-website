@@ -1,0 +1,28 @@
+<div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+  <span><i class="spinner-border"></i></span>
+</div>
+<div *ngIf="!loading" class="row d-flex justify-content-between">
+  <div class="card-user col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 d-flex flex-column ">
+    <div [routerLinkActiveOptions]="{exact: true}" class="item-nav body2-medium" routerLink="/dynamic-configs/faq"
+         routerLinkActive="active-user-link">
+      <p>سوالات متداول</p>
+    </div>
+    <!--<div [routerLinkActiveOptions]="{exact: true}"
+         class="item-nav body2-medium mt-2" routerLink="/dynamic-configs/create-info"
+         routerLinkActive="active-user-link">
+      <p>ساخت صفحه جدید</p>
+    </div>
+    <div *ngIf="dynamicPages && dynamicPages.length > 1" [routerLinkActiveOptions]="{exact: true}"
+         class="item-nav body2-medium mt-2" routerLink="/dynamic-configs/reArrange-info"
+         routerLinkActive="active-user-link">
+      <p>تغییر جایگاه صفحه ها</p>
+    </div>-->
+    <div *ngFor="let page of dynamicPages" [queryParams]="{ id: page.id }" [routerLinkActiveOptions]="{exact: true}"
+         class="item-nav body2-medium mt-2" routerLink="/dynamic-configs/info" routerLinkActive="active-user-link">
+      <p>{{page.name}}</p>
+    </div>
+  </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-8-half col-xl-8-half d-flex flex-column mt-32 p-0">
+    <router-outlet></router-outlet>
+  </div>
+</div>

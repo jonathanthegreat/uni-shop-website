@@ -1,0 +1,98 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست تخصص</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p (click)="openDialog(add, null, null)" class="col-green body2-bold cursor-pointer title">افزودن تخصص</p>
+  </div>
+</div>
+<div class="table-body">
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">ردیف</th>
+      <th scope="col">نام تخصص</th>
+      <th scope="col">تاریخ ساخت</th>
+      <th scope="col">تاریخ آخرین تغییر</th>
+      <th scope="col">عملیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="fields && fields!.length > 0 && !loading"
+           class="persianNum-medium-16 line-height">
+    <tr *ngFor="let field of fields; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>{{i + 1}}</td>
+      <td>{{field.name || 'وارد نشده'}}</td>
+      <td>{{(field.created) ? globalVariableService.convertDate(field.created, 'fa', 'jYYYY/jMM/jDD') : 'وارد نشده'}}</td>
+      <td>{{(field.updated) ? globalVariableService.convertDate(field.updated, 'fa', 'jYYYY/jMM/jDD') : 'وارد نشده'}}</td>
+      <td>
+        <img (click)="openDialog(edit , field?.id, field?.name)"
+             class="img-edit cursor-pointer"
+             src="assets/media/icons/insurance/edit-insurance.svg">
+        <img (click)="openDialog(deleteModal,  field?.id , field?.name)" class="img-edit cursor-pointer"
+             src="assets/media/icons/insurance/delete-insurance.svg">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="!loading && fields && fields.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">تخصصی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #edit let-data>
+  <div [formGroup]="editForm">
+    <p class="body1-bold col-33">ویرایش تخصص</p>
+    <div class="input-box">
+      <p class="Caption1-medium col-97 text-label">نام تخصص</p>
+      <input class="body1-medium col-33 form form-group mt-2 w-100" formControlName="name" placeholder="نام تخصص"
+             required>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="editField(data.fieldsId)" [disabled]="loadingAdd || editForm.invalid || !editForm.dirty"
+              class="edit body2-medium">
+        <span *ngIf="!loadingAdd">بروزرسانی</span>
+        <span *ngIf="loadingAdd"><i class="spinner spinner-warning"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #add let-data>
+  <div [formGroup]="addForm">
+    <p class="body1-bold col-33">افزودن تخصص</p>
+    <div class="input-box">
+      <p class="Caption1-medium col-97 text-label">نام تخصص</p>
+      <input class="body1-medium col-33 form form-group mt-2 w-100" formControlName="name"
+             placeholder="نام تخصص را وارد نمایید"
+             required>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="createField()" [disabled]="loadingAdd || addForm.invalid" class="add body2-medium">
+        <span *ngIf="!loadingAdd">تایید</span>
+        <span *ngIf="loadingAdd"><i class="spinner-border"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-data>
+  <p class="body1-bold col-33">حذف تخصص</p>
+  <p class="mt-2 body2-bold col-40 mt-1">آیا از حذف "{{data?.fieldsName}}" مطمئن هستید؟</p>
+  <div class="d-flex flex-row justify-content-between mt-4">
+    <button (click)="close()" class="back body2-medium">بازگشت</button>
+    <button (click)="removeField(data?.fieldsId)" [disabled]="loadingAdd" class="delete-insur body2-medium">
+      <span *ngIf="!loadingAdd">حذف</span>
+      <span *ngIf="loadingAdd"><i class="spinner spinner-danger"></i></span>
+    </button>
+  </div>
+</ng-template>
+

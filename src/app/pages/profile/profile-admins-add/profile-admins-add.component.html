@@ -1,0 +1,82 @@
+<div [formGroup]="addForm" class="card-info">
+  <p class="body2-bold col-green text-label">افزودن ادمین</p>
+  <div (click)="goBack()" class="col-green  d-flex flex-row justify-content-end">
+    <p class="body2-bold cursor-pointer text-label col-green">بازگشت</p>
+  </div>
+
+  <div class="row display-inputs">
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box">
+      <p class="Caption1-medium col-97 text-label">نام</p>
+      <input class="body1-medium col-33" formControlName="fname" placeholder="نام ادمین" type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box m-input">
+      <p class="Caption1-medium col-97 text-label"> نام‌خانوادگی</p>
+      <input class="body1-medium col-33" formControlName="lname" placeholder="نام خانوادگی ادمین" type="text">
+    </div>
+
+    <div [ngClass]="((emailExist == true)) ? 'input-box-error' : 'input-box'"
+         class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p [ngClass]="((emailExist == true)) ? 'text-label-error' : 'text-label'"
+         class="Caption1-medium text-label">ایمیل</p>
+      <input (blur)="checkField()" class="body1-medium col-33" formControlName="email"
+             placeholder="ex@gmail.com" style="direction: ltr"
+             type="email">
+      <p *ngIf="(emailExist == true)" class="persianNum-medium-10"
+         style="color:#FF4848;margin-top: 16px">
+        ایمیل تکراری می باشد.</p>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">رمز عبور</p>
+      <input [regex]="globalVariableService.USER_NAME_REGEX" class="body1-medium col-33" formControlName="password"
+             maxlength="20"
+             minlength="8" placeholder="بین 8 تا 20 کاراکتر"
+             style="direction: ltr" type="password">
+    </div>
+
+    <div [ngClass]="((usernameExist == true)) ? 'input-box-error' : 'input-box'"
+         class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p [ngClass]="((usernameExist == true)) ? 'text-label-error' : 'text-label'"
+         class="Caption1-medium text-label">نام کاربری</p>
+      <input (blur)="checkField()" [regex]="globalVariableService.USER_NAME_REGEX"
+             class="body1-medium col-33"
+             formControlName="username" maxlength="15"
+             minlength="3"
+             placeholder="بین 3 تا 15 کاراکتر" style="direction: ltr" type="text">
+      <p *ngIf="(usernameExist == true)" class="persianNum-medium-10"
+         style="color:#FF4848;margin-top: 16px">نام کاربری تکراری می باشد.</p>
+    </div>
+
+    <div [ngClass]="((phoneNumberExist == true)) ? 'input-box-error' : 'input-box'"
+         class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p [ngClass]="((phoneNumberExist == true)) ? 'text-label-error' : 'text-label'"
+         class="Caption1-medium text-label">شماره موبایل</p>
+      <input (blur)="checkField()" [regex]="globalVariableService.PHONE_INPUT_REGEX"
+             class="body1-medium col-33" formControlName="phoneNumber" maxlength="11"
+             oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" placeholder="09........."
+             style="direction: ltr"
+             type="tel">
+      <p *ngIf="(phoneNumberExist == true)" class="persianNum-medium-10"
+         style="color:#FF4848;margin-top: 16px">شماره موبایل تکراری می باشد.</p>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">سطح دسترسی</p>
+      <mat-select class="body1-medium col-33" formControlName="accessLevel" placeholder="انتخاب کنید"
+                  style="margin-top: 14px">
+        <mat-option class="body1-medium col-33" value="0">سوپر ادمین</mat-option>
+        <mat-option class="body1-medium col-33" value="1">ادمین</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <button (click)="createAdmin()"
+            [disabled]="addForm.invalid || loading || emailExist == true || phoneNumberExist == true || usernameExist == true"
+            class="btn-add body1-medium d-flex justify-content-center align-items-center">
+      افزودن
+      <span *ngIf="loading"><i class="spinner-border mx-3"></i></span>
+    </button>
+  </div>
+</div>

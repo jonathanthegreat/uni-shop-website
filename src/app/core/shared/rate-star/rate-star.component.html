@@ -1,0 +1,12 @@
+<!--<span *ngFor="let star of checkedStars" class="fa fa-star checked"></span>
+<span *ngFor="let star of emptyStars" class="fa fa-star"></span>-->
+<ng-container *ngFor="let star of checkedStars; index as i">
+  <span (click)="rate(i, 0)" *ngIf="star === 'star'" class="fa fa-star checked" [class.cursor-pointer]="!readonly"></span>
+  <div *ngIf="star === 'half'" class="d-inline-block">
+    <span class="fa fa-star fa-star-half"></span>
+    <span class="fa fa-star"></span>
+  </div>
+</ng-container>
+<ng-container *ngFor="let star of emptyStars; index as i">
+  <span (click)="rate(i, 1)" class="fa fa-star" [class.cursor-pointer]="!readonly"></span>
+</ng-container>

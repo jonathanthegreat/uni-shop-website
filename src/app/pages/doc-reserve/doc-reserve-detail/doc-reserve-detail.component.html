@@ -1,0 +1,91 @@
+<div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+  <span><i class="spinner-border"></i></span>
+</div>
+<div *ngIf="!loading" class="table-body">
+  <div class="row d-flex justify-content-between">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 p-0 d-flex align-items-center">
+      <img alt="arrow" class="cursor-pointer back-icn" routerLink="/doc-reserve/list"
+           src="assets/media/images/svg/comment/back.svg">
+      <p class="title2-bold col-33" style="width: 100%">جزئیات درخواست {{doctorReserve.appointmentTime?.code}}</p>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4-3qtr col-xl-4-3qtr mt-div">
+      <mat-select (selectionChange)="onChange($event)" [(ngModel)]="doctorReserve.status" [disabled]="loadingStatus"
+                  [ngClass]="{
+                  'status-processing': doctorReserve?.status == 'PROCESSING',
+                  'status-verified': doctorReserve?.status == 'VERIFIED',
+                  'status-canceled': doctorReserve?.status == 'CANCELED',
+                  'status-done': doctorReserve?.status == 'DONE'
+                  }"
+                  class="persianNum-bold-14">
+        <mat-option class="persianNum-bold-14" style="color: #00AA7E" value="VERIFIED">تایید شده</mat-option>
+        <mat-option class="persianNum-bold-14" style="color: #F6A036" value="PROCESSING">در حال بررسی</mat-option>
+        <mat-option class="persianNum-bold-14" style="color: #DB0049" value="CANCELED">لغو شده</mat-option>
+        <mat-option class="persianNum-bold-14" style="color: #9F39C1" value="DONE">انجام شده</mat-option>
+      </mat-select>
+    </div>
+  </div>
+  <hr>
+  <div class="row d-flex justify-content-between">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 p-0">
+      <div class="p-0">
+        <div class="display-inputs row">
+          <div (click)="goToUser()"
+               class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mt-input cursor-pointer">
+            <p class="body2-medium col-97 input-text">درخواست دهنده</p>
+            <input
+              [value]="(doctorReserve.user?.firstName || doctorReserve.user?.lastName) ? (userFullName) : 'ثبت نشده'"
+              class="body1-medium col-green cursor-pointer"
+              readonly>
+          </div>
+          <div (click)="goToDoctor()"
+               class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mt-input cursor-pointer">
+            <p class="body2-medium col-97 input-text">پزشک مشاور</p>
+            <input
+              [value]="(doctorReserve.doctor?.firstName || doctorReserve.doctor?.lastName) ? (docFullName) : 'ثبت نشده'"
+              class="body1-medium col-green cursor-pointer"
+              readonly>
+          </div>
+        </div>
+        <div class="display-inputs row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mt-input">
+            <p class="body2-medium col-97 input-text">تاریخ جلسه</p>
+            <input
+              [value]="(doctorReserve.appointmentTime?.startTime) ? globalVariableService.convertDate(doctorReserve.appointmentTime?.startTime, 'fa', 'jYYYY/jMM/jDD') : 'ثبت نشده'"
+              class="persianNum-medium-16 col-33 dir-ltr"
+              readonly>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mt-input">
+            <p class="body2-medium col-97 input-text">زمان جلسه</p>
+            <input
+              [value]="(doctorReserve.appointmentTime?.startTime && doctorReserve.appointmentTime?.endTime) ? (globalVariableService.convertDate(doctorReserve.appointmentTime?.startTime, 'fa','HH:mm') + ' _ ' + globalVariableService.convertDate(doctorReserve.appointmentTime?.endTime, 'fa','HH:mm')) : 'ثبت نشده'"
+              class="persianNum-medium-16 col-33 dir-ltr"
+              readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4-3qtr col-xl-4-3qtr mt-div">
+      <div class="table-body">
+        <div class="display-inputs" style="margin-bottom: 32px">
+          <p class="body2-bold col-33">وضعیت پرداخت:</p>
+          <p [ngClass]="(doctorReserve?.referenceNumber) ? 'col-green' : 'col-red'"
+             class="body2-bold">{{(doctorReserve?.referenceNumber) ? 'موفق' : 'ناموفق'}}</p>
+        </div>
+        <div class="display-inputs mb-3">
+          <p class="body2-medium col-97">مبلغ خدمت</p>
+          <p class="persianNum-medium-14 col-97">{{doctorReserve?.regularPriceFormatted || 'ثبت نشده'}}</p>
+        </div>
+        <div *ngIf="doctorReserve?.disCountPriceFormatted && doctorReserve?.disCountPriceFormatted != '0 تومان'"
+             class="display-inputs">
+          <p class="body2-medium col-97">مبلغ تخفیف</p>
+          <p class="persianNum-medium-14 col-red">{{doctorReserve?.disCountPriceFormatted || 'ثبت نشده'}}</p>
+        </div>
+        <hr>
+        <div class="display-inputs">
+          <p class="body2-bold col-33">مبلغ پرداخت شده</p>
+          <p class="persianNum-bold-14 col-33">{{doctorReserve?.totalPriceFormatted || 'ثبت نشده'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

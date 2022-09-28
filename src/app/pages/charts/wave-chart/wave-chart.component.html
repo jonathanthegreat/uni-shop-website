@@ -1,0 +1,47 @@
+<div #chartRef [ngClass]="'bg-' + chartColor" class="w-chart" style="border-radius: 14px">
+  <apx-chart
+    [chart]="chartOptions.chart"
+    [colors]="chartOptions.colors"
+    [dataLabels]="chartOptions.dataLabels"
+    [fill]="chartOptions.fill"
+    [legend]="chartOptions.legend"
+    [markers]="chartOptions.markers"
+    [plotOptions]="chartOptions.plotOptions"
+    [series]="chartOptions.series"
+    [states]="chartOptions.states"
+    [stroke]="chartOptions.stroke"
+    [tooltip]="chartOptions.tooltip"
+    [xaxis]="chartOptions.xaxis"
+    [yaxis]="chartOptions.yaxis"
+  ></apx-chart>
+</div>
+
+<div class="w-chart" style="margin-top: -100px">
+
+  <div class="row">
+    <div class="col bg-light-warning cards">
+      <span [inlineSVG]="'./assets/media/icons/duotune/general/gen032.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block"></span>
+      <a class="text-warning fw-bold fs-6" href="#"> Weekly Sales </a>
+    </div>
+    <div class="col bg-light-primary cards">
+      <span [inlineSVG]="'./assets/media/icons/duotune/finance/fin006.svg'"
+            class="svg-icon svg-icon-3x svg-icon-primary d-block"></span>
+      <a class="text-primary fw-bold fs-6" href="#"> New Projects </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col bg-light-danger cards">
+      <span [inlineSVG]="'./assets/media/icons/duotune/abstract/abs027.svg'"
+            class="svg-icon svg-icon-3x svg-icon-danger d-block"></span>
+      <a class="text-danger fw-bold fs-6 mt-2" href="#"> Item Orders </a>
+    </div>
+    <div class="col bg-light-success cards">
+      <span [inlineSVG]="'./assets/media/icons/duotune/communication/com010.svg'"
+            class="svg-icon svg-icon-3x svg-icon-success d-block"></span>
+      <a class="text-success fw-bold fs-6 mt-2" href="#"> Bug Reports </a>
+    </div>
+  </div>
+
+</div>

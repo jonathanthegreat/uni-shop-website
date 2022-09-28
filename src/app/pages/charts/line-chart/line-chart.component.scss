@@ -1,0 +1,13 @@
+.w-chart {
+  width: 100%;
+  overflow: unset;
+}
+
+@media (max-width: 768px) {
+
+  .w-chart {
+    width: 1000px;
+    overflow: scroll;
+  }
+
+}

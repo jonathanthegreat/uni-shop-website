@@ -1,0 +1,39 @@
+::ng-deep body {
+  background-color: #ffffff;
+}
+
+.login-card {
+  border: 1px solid #D8D8D8;
+  box-sizing: border-box;
+  border-radius: 28px;
+  padding: 24px;
+  width: 400px;
+}
+
+.login-btn {
+  height: 48px;
+  border: none;
+}
+
+input {
+  direction: ltr;
+}
+
+input::placeholder {
+  text-align: right;
+}
+
+.momImg {
+  width: 155px !important;
+}
+
+@media (max-width: 768px) {
+
+  .login-card {
+    border: none;
+    box-sizing: border-box;
+    padding: 16px;
+  }
+
+}
+

@@ -1,0 +1,37 @@
+<div class="card">
+  <p class="col-green title body2-bold">{{ infoModel.name }}</p>
+  <div class="d-flex flex-row justify-content-end">
+    <p (click)="preview($event)" *ngIf="!show" class="col-green title body2-bold cursor-pointer">مشاهده</p>
+    <p (click)="preview($event)" *ngIf="show" class="col-green title body2-bold cursor-pointer">برگشت</p>
+  </div>
+  <div *ngIf="!show">
+    <div *ngIf="!loading" [formGroup]="formContent" style="margin-bottom: 32px">
+      <ckeditor
+        (ready)="onReadyCkEditor($event)"
+        [config]="config"
+        [editor]="Editor"
+        formControlName="content"
+      ></ckeditor>
+      <div class="d-flex flex-row justify-content-center w-100" style="position: absolute; bottom: -23px;left: 0">
+        <button (click)="updateInfo()" [disabled]="sending" class="submit body1-medium">ویرایش</button>
+        <!--<button (click)="deleteInfo()" [disabled]="sending" class="delete body1-medium">حذف</button>-->
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="show">
+    <div>
+      <ng-container>
+        <div [innerHTML]="info.content"></div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="d-flex justify-content-center m-10">
+    <mat-progress-spinner
+      [diameter]="50"
+      color="primary"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
+</div>

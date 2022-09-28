@@ -1,0 +1,25 @@
+<div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+  <span><i class="spinner-border"></i></span>
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="questions?.length >0 " class="card-info mt-input">
+    <p class="body2-bold col-green text-label">اطلاعات پزشکی</p>
+    <div *ngFor="let question of questions; let i = index" class="row display-inputs">
+      <p class="persianNum-medium-14 col-33">{{i + 1}}- {{question.question?.title}} </p>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+        <textarea class="persianNum-bold-14 input-box w-100" readonly type="text">{{question?.answer}} </textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="questions && questions?.length == 0" class="card-info mt-input">
+    <p class="body2-bold col-green text-label">اطلاعات پزشکی</p>
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 50%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">اطلاعاتی وجود ندارد</p>
+    </div>
+  </div>
+</div>

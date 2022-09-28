@@ -1,0 +1,112 @@
+.table-body {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 32px 32px 0 32px;
+/*  @media (max-width: 1278px) {
+    overflow-x: scroll;
+  }*/
+  overflow-x: scroll;
+}
+
+::ng-deep {
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    z-index: 0 !important;
+    background-color: #00AA7E;
+    color: #00AA7E;
+  }
+
+  .mat-tab-label {
+    z-index: 0 !important;
+    min-width: 40px !important;
+  }
+
+  .mat-tab-label-active {
+    z-index: 0 !important;
+    color: #00AA7E;
+  }
+
+  .mat-tab-label .mat-tab-label-content {
+    z-index: 0 !important;
+    font-family: DanaMedium, sans-serif !important;
+    font-size: 16px !important;
+  }
+}
+
+th {
+  color: #979797;
+}
+
+hr {
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.sort-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.detail-btn {
+  height: 42px;
+  width: 80px;
+}
+
+.line-height {
+  line-height: 42px;
+}
+
+.paginator-body {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 19px;
+}
+
+.doc-img-body {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #00AA7E, #A03AC1);
+}
+
+.doc-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.last-item {
+  border-bottom: hidden;
+}
+
+.title {
+  position: absolute;
+  top: -10px;
+  background-color: #ffffff;
+  padding: 0 5px;
+  p {
+    margin: 0;
+  }
+}
+
+.header-title {
+  position: relative;
+  width: 100%;
+  padding: 0 32px ;
+}
+
+/*hide scrollbar*/
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#element::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  overflow: auto;
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-width: none; /* Firefox 64 */
+}

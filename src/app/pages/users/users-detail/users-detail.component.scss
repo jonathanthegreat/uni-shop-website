@@ -1,0 +1,152 @@
+.card-user {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 24px;
+  position: relative;
+  height: max-content;
+}
+
+.text-label {
+  position: absolute;
+  top: -11px;
+  background-color: #ffffff;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.doc-img-body {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #00AA7E, #A03AC1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doc-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+input {
+  border: hidden;
+  outline: none;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .col-lg-8-half {
+    -ms-flex: 0 0 70.833333%;
+    flex: 0 0 70.833333%;
+    max-width: 70.833333%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .col-xl-8-half {
+    -ms-flex: 0 0 70.833333%;
+    flex: 0 0 70.833333%;
+    max-width: 70.833333%;
+  }
+}
+
+.reject-meeting {
+  background: #ffffff;
+  border: 1px solid #DB0049;
+  border-radius: 14px;
+  height: 48px;
+  width: 48%;
+  color: #DB0049;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.reject-meeting:hover {
+  background: #DB0049;
+  border-radius: 14px;
+  height: 48px;
+  width: 48%;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.back {
+  border: 1px solid #979797;
+  border-radius: 14px;
+  height: 48px;
+  width: 48%;
+  color: #979797;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+::ng-deep .modal-class {
+  mat-dialog-container {
+    padding: 24px !important;
+    border-radius: 28px !important;
+    width: 380px !important;
+    height: 197px !important;
+  }
+}
+
+.no-wrap {
+  white-space: nowrap;
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.item-nav {
+  height: 48px;
+  border-radius: 14px;
+  color: #333333;
+  padding: 10px 12px 0px 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  cursor: pointer;
+  border: #FFFFFF solid 1px;
+}
+
+.item-nav:hover {
+  border: #00AA7E solid 1px;
+  color: #00AA7E;
+}
+
+.item-nav-active {
+  color: #FFFFFF;
+  background-color: #00AA7E;
+}
+
+.item-nav-active:hover {
+  color: #FFFFFF;
+  background-color: #00AA7E;
+}
+
+.active-user-link {
+  background-color: #00AA7E;
+  color: #ffffff !important;
+}
+
+.res {
+  margin: 0 0 0 0 !important;
+  padding: 0;
+}
+
+@media (max-width: 1000px) {
+
+  .res {
+    margin: 30px 0 30px 0 !important;
+    padding: 0;
+  }
+}

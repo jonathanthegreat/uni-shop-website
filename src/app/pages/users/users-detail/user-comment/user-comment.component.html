@@ -1,0 +1,94 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">نظرات</p>
+  </div>
+</div>
+<div class="table-body">
+  <div class="d-flex justify-content-between">
+    <mat-tab-group (selectedIndexChange)="filter($event)"
+                   style="z-index: 0; margin-left: 32px">
+      <mat-tab label="همه"></mat-tab>
+      <mat-tab label="در حال بررسی"></mat-tab>
+      <mat-tab label="تایید شده"></mat-tab>
+      <mat-tab label="رد شده"></mat-tab>
+    </mat-tab-group>
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">نام پزشک</th>
+      <th scope="col">امتیاز</th>
+      <th scope="col">تاریخ</th>
+      <th scope="col">محرمانه</th>
+      <th scope="col">وضعیت</th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="comments && comments!.length > 0 && !loading"
+           class="persianNum-medium-16 line-height">
+    <tr *ngFor="let comment of comments; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>{{comment?.doctorRes ? (comment?.doctorRes?.firstName + ' ' + comment?.doctorRes?.lastName) : 'وارد نشده'}}</td>
+      <td>{{comment.rate || '0'}}</td>
+      <td>{{globalVariableService.convertDate(comment.created, 'fa', 'jYYYY/jMM/jDD') || 'وارد نشده'}}</td>
+      <td>{{(comment.showUserInfo) ? 'بله' : 'خیر'}}</td>
+      <td *ngIf="comment.status == 'REJECTED'" class="body2-medium">
+        <div class="status-table status-table-canceled" style=""><p>رد شده</p></div>
+      </td>
+      <td *ngIf="comment.status == 'VERIFIED'" class="body2-medium">
+        <div class="status-table status-table-verified"><p>تایید شده</p></div>
+      </td>
+      <td *ngIf="comment.status == 'NEW'" class="body2-medium">
+        <div class="status-table status-table-processing"><p>در حال بررسی</p></div>
+      </td>
+      <td class="line-height-0">
+        <button (click)="openDialog(commentModal, comment?.comment, comment?.id, comment?.status)"
+                class="green-button-outLine detail-btn">جزئیات
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="comments && comments!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">نظری وجود ندارد</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>
+
+<ng-template #commentModal let-data>
+  <div>
+    <div class="d-flex flex-row justify-content-between">
+      <div class="d-flex flex-row align-items-center " style="height: 47px">
+        <img (click)="dialogRef.close()" class="mx-2 mb-2 cursor-pointer" src="assets/media/images/svg/comment/back.svg"
+             style="width: 22px;height: 15px">
+        <p class="body1-bold col-33">جزئیات نظر</p>
+      </div>
+      <mat-select (selectionChange)="updateComment(data.id, $event)" [(ngModel)]="data.status"
+                  [disabled]="updateLoading" [ngClass]="{
+                  'status-verified': data?.status == 'VERIFIED',
+                  'status-processing': data?.status == 'NEW',
+                  'status-canceled': data?.status == 'REJECTED'
+                  }"
+                  class="body1-medium"
+                  style="width: 200px !important;">
+        <mat-option class="body2-medium" style="color: #F6A036" value="NEW">در حال بررسی</mat-option>
+        <mat-option class="body2-medium" style="color: #00AA7E" value="VERIFIED">تایید شده</mat-option>
+        <mat-option class="body2-medium" style="color: #DB0049" value="REJECTED">رد شده</mat-option>
+      </mat-select>
+    </div>
+    <hr>
+    <p class="body2-medium col-33" style="overflow-y: auto">
+      {{data.comment}}
+    </p>
+  </div>
+</ng-template>

@@ -1,0 +1,19 @@
+.card-info {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 24px;
+  position: relative;
+}
+
+.text-label {
+  position: absolute;
+  top: -11px;
+  background-color: #ffffff;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.w-line {
+  width: 100%;
+  overflow: auto;
+}

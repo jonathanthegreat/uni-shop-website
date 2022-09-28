@@ -1,0 +1,112 @@
+.card-info {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 32px;
+  position: relative;
+}
+
+.text-label {
+  position: absolute;
+  top: -11px;
+  background-color: #ffffff;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.input-box {
+  border: 1px solid #979797;
+  border-radius: 14px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+input {
+  border: hidden;
+  outline: none;
+  margin-top: 12px;
+  padding-right: 5px;
+  width: 100%;
+}
+
+.display-inputs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mt-input {
+  margin-top: unset;
+}
+
+.mt-div {
+  margin-top: 33px;
+}
+
+.text-lft-dir {
+  direction: ltr !important;
+}
+
+@media (max-width: 991px) {
+  .mt-div {
+    margin-top: unset;
+  }
+
+  .mt-input {
+    margin-top: 33px;
+  }
+
+  .display-inputs {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+mat-select {
+  border-radius: 14px;
+  border: solid 1px #979797;
+  height: 48px;
+  background-color: #ffffff;
+  position: absolute;
+  bottom: -24px;
+  width: 300px;
+  padding: 11px;
+}
+
+/*.status-verified {
+  border: 1px solid #00AA7E;
+  color: #00AA7E !important;
+  border-radius: 14px;
+  height: 48px;
+  background-color: #ffffff;
+  padding: 12px;
+
+  ::ng-deep {
+    .mat-select-value-text {
+      color: #00AA7E;
+    }
+
+    .mat-select-arrow {
+      color: #00AA7E;
+    }
+  }
+}
+
+.status-canceled {
+  border: 1px solid #DB0049;
+  color: #DB0049 !important;
+  border-radius: 14px;
+  height: 48px;
+  background-color: #ffffff;
+  padding: 12px;
+
+  ::ng-deep {
+    .mat-select-value-text {
+      color: #DB0049;
+    }
+
+    .mat-select-arrow {
+      color: #DB0049;
+    }
+  }
+}*/
+

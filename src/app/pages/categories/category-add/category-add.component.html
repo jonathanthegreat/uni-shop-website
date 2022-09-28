@@ -1,0 +1,29 @@
+<div [formGroup]="productForm" class="card-info">
+  <div formArrayName="quantities">
+    <p class="text-label col-green body2-bold">افزودن دسته‌بندی جدید</p>
+    <p class="body2-medium col-97">عنوان دسته‌بندی <span style="color: red">*</span></p>
+    <div [formGroup]="FormParent">
+      <input class="input-parent body1-medium col-33" formControlName="parent" type="text">
+    </div>
+    <div class="mt-4">
+      <p class="body2-medium col-97">عنوان زیر دسته‌بندی <span style="color: red">*</span></p>
+      <div *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i" class="d-flex flex-row"
+           style="margin-bottom: 48px">
+        <input class="input-parent body1-medium col-33" formControlName="qty"/>
+        <button (click)="addQuantity()" [disabled]="productForm.value.quantities[i].qty == ''" class="add body2-medium">
+          افزودن
+        </button>
+        <button (click)="removeQuantity(i)" [disabled]="i==0" class="remove body2-medium">حذف</button>
+        <div class="d-flex flex-row justify-content-center w-100" style="position: absolute;bottom: -24px;">
+          <button (click)="onSubmit()"
+                  [disabled]="FormParent.invalid || productForm.value.quantities[i].qty == '' || loading"
+                  class="d-flex flex-row justify-content-center align-items-center body1-medium btn-bottom">
+            افزودن دسته‌بندی
+            <span *ngIf="loading" class="spinner spinner-success"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

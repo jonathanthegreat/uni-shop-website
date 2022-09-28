@@ -1,0 +1,83 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست پرسش و پاسخ</p>
+  </div>
+</div>
+<div class="table-body">
+  <div [formGroup]="searchForm" class="d-flex justify-content-between">
+    <mat-tab-group (selectedIndexChange)="filter($event, 'html')" [selectedIndex]="selectedIndex"
+                   style="z-index: 0; margin-left: 32px">
+      <mat-tab label="همه"></mat-tab>
+      <mat-tab label="تایید شده"></mat-tab>
+      <mat-tab label="در حال بررسی"></mat-tab>
+      <mat-tab label="رد شده"></mat-tab>
+    </mat-tab-group>
+    <input (ngModelChange)="searchQATextChanged.next($event)" [(ngModel)]="searchQAText"
+           class="input-mom body2-medium"
+           formControlName="search" placeholder="جستجو در پرسش ها" style="min-width: 335px" type="search">
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">کد</th>
+      <th scope="col">نام کاربر</th>
+      <th scope="col">نام پزشک</th>
+      <th scope="col">موضوع</th>
+      <th scope="col">تاریخ ثبت
+        <!--<img (click)="sort('created', 'ASC')" *ngIf="sortBy!='created'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('created', 'ASC')" *ngIf="direction=='DESC' && sortBy=='created'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('created', 'DESC')" *ngIf="direction=='ASC' && sortBy=='created'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">-->
+      </th>
+      <th scope="col">وضعیت</th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="qaList && qaList!.length > 0 && !loading" class="persianNum-medium-16 line-height">
+    <tr *ngFor="let qa of qaList; let i = index; let lastItem = last;"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>{{qa.code || 'ثبت نشده'}}</td>
+      <td>{{(qa?.user && qa?.user!.firstName && qa?.user!.lastName) ? (qa?.user!.firstName + ' ' + qa?.user!.lastName) : 'ثبت نشده'}}</td>
+      <td>{{(qa?.doctor && qa?.doctor!.firstName && qa?.doctor!.lastName) ? (qa?.doctor!.firstName + ' ' + qa?.doctor!.lastName) : 'بدون پاسخ'}}</td>
+      <td>{{qa.subject || 'ثبت نشده'}}</td>
+      <td>{{(qa.created) ? globalVariableService.convertDateToDateWithTime(qa?.created) : 'ثبت نشده'}}</td>
+      <td *ngIf="qa.status == 'ALL'" class="body2-medium">
+        <div class="status-table" style="border: 1px solid #333333; color: #333333"><p>همه</p></div>
+      </td>
+      <td *ngIf="qa.status == 'REJECTED'" class="body2-medium">
+        <div class="status-table status-table-canceled"><p>رد شده</p></div>
+      </td>
+      <td *ngIf="qa.status == 'VERIFIED'" class="body2-medium">
+        <div class="status-table status-table-verified"><p>تایید شده</p></div>
+      </td>
+      <td *ngIf="qa.status == 'NEW'" class="body2-medium">
+        <div class="status-table status-table-processing"><p>در حال بررسی</p></div>
+      </td>
+      <td *ngIf="!qa.status" class="body2-medium">
+        <div class="status-table status-table-processing"><p>ثبت نشده</p></div>
+      </td>
+      <td class="line-height-0">
+        <button class="green-button-outLine detail-btn" routerLink="/qa/detail/{{qa.id}}">جزئیات</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="qaList && qaList!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">پرسشی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>

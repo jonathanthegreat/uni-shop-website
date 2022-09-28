@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>مام | پنل مدیریت</title>
+  <base href="/"/>
+  <!--shrink-to-fit=no"-->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="Seyed Amir Hosein Khalilian/ Mohammad Yasin Fazli" name="author">
+  <link href="./assets/media/favicon/momLife.svg" rel="shortcut icon"/>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- SPLASH SCREEN-->
+  <style>
+    .mat-typography {
+      background-color: #ffffff !important;
+    }
+
+    .logo {
+      width: 328px;
+      height: 152px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    #splash-screen {
+      position: absolute;
+      z-index: 1000;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: white;
+      transition: opacity 0.3s;
+    }
+
+    #splash-screen img:first-child {
+      margin-left: calc(100vw - 100%);
+      margin-bottom: 30px;
+      width: 512px;
+    }
+
+    #splash-screen img:last-child {
+      width: 96px;
+      height: 96px;
+    }
+
+    @media (max-width: 768px) {
+
+      #splash-screen img:first-child {
+        margin-left: calc(100vw - 100%);
+        margin-bottom: 30px;
+        width: 60%;
+      }
+
+      #splash-screen img:last-child {
+        width: 72px;
+        height: 72px;
+      }
+
+    }
+
+    #splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-spinner {
+      animation: rotate 2s linear infinite;
+      margin-left: calc(100vw - 100%);
+      width: 50px;
+      height: 50px;
+    }
+
+    .splash-spinner .path {
+      stroke: #E6637C;
+      stroke-linecap: round;
+      animation: dash 1.5s ease-in-out infinite;
+    }
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+      }
+
+      100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+      }
+    }
+  </style>
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+</head>
+<body class="mat-typography" root>
+<div id="splash-screen" style="position: absolute;top:0;height: 100vh">
+  <img alt="Mom logo" class="logo" src="assets/media/images/svg/header/Mom.svg"/>
+  <img alt="loading" src="assets/media/loading/Dual%20Ball-1.2s-200px.svg"/>
+</div>
+</body>
+</html>
+

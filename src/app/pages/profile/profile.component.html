@@ -1,0 +1,57 @@
+<div class="row d-flex justify-content-between">
+  <div class="card-user col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 d-flex flex-column ">
+    <div class="d-flex flex-row justify-content-start">
+      <div class="doc-img-body">
+        <img
+          [src]="(admin.profileImageAddress && !admin.profileImageAddress.endsWith('null'))  ?  admin.profileImageAddress : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+          alt="img"
+          class="doc-img">
+
+        <label for="image" id="edit-image">
+          <div class="d-flex justify-content-center">
+            <img src="assets/media/images/svg/profile/pen.svg" style="width: 9px; height: 9px">
+          </div>
+        </label>
+      </div>
+      <div>
+        <p class="body2-bold col-33"
+           style="margin-right: 12px ">{{admin?.username ? admin?.username : 'وارد نشده'}}</p>
+        <p class="persianNum-medium-12 col-33 mt-2"
+           style="margin-right: 12px ">{{admin?.phoneNumber ? admin?.phoneNumber : 'وارد نشده'}}</p>
+        <p class="persianNum-medium-12 col-40 mt-2"
+           style="margin-right: 12px ">{{(admin?.accessLevel == 0) ? 'سوپر ادمین' : 'ادمین'}}</p>
+        <input (change)="updateImage($event)" accept=".png, .jpg, .jpeg" class="d-none" id="image" name="image"
+               type="file">
+      </div>
+    </div>
+    <hr class="h-line">
+    <div class="item-nav body2-medium" routerLink="/profile/info" routerLinkActive="active-user-link"
+         style="margin-top: 35px"><p>
+      اطلاعات حساب کاربری</p></div>
+    <div class="item-nav body2-medium" routerLink="/profile/admins" routerLinkActive="active-user-link"><p>لیست ادمین
+      ها</p></div>
+    <div class="item-nav body2-medium" routerLink="/profile/change-password" routerLinkActive="active-user-link"><p>
+      تغییر رمزعبور</p></div>
+    <div (click)="openDialog(exitModel)" class="item-nav-exit body2-medium"><p>خروج از حساب کاربری</p></div>
+  </div>
+
+  <div class="col-12 col-sm-12 col-md-12 col-lg-8-half col-xl-8-half d-flex flex-column res">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+
+<ng-template #exitModel let-data>
+  <p class="body1-bold col-33 mb-0">خروج از حساب کاربری</p>
+  <p class="body2-medium text-color-404040 mb-0" style="margin-top: 12px">آیا می‌خواهید از حساب کاربری خود خارج
+    شوید؟</p>
+  <div class="d-flex flex-row justify-content-between mt-4">
+    <button (click)="closeDialog()" class="back body2-medium">
+      بازگشت
+    </button>
+    <button (click)="exit()" class="logout body2-medium">
+      خروج
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,106 @@
+.table-body {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 32px;
+  overflow-x: scroll;
+}
+
+.header-title {
+  position: relative;
+  width: 100%;
+  padding: 0 32px ;
+}
+
+.title {
+  position: absolute;
+  top: -10px;
+  background-color: #ffffff;
+  padding: 0 5px;
+  p {
+    margin: 0;
+  }
+}
+
+::ng-deep {
+  ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #00AA7E;
+    color: #00AA7E;
+  }
+
+  .mat-tab-label {
+    max-width: 120px !important;
+    min-width: 120px !important;
+  }
+
+  .mat-tab-label-active {
+    color: #00AA7E;
+  }
+
+  .mat-tab-label .mat-tab-label-content {
+    font-family: DanaMedium, sans-serif !important;
+    font-size: 16px !important;
+  }
+}
+
+hr {
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.sort-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.detail-btn {
+  height: 42px;
+  width: 80px;
+}
+
+.line-height {
+  line-height: 42px;
+}
+
+.paginator-body {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 19px;
+}
+
+.doc-img-body {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #00AA7E, #A03AC1);
+}
+
+.doc-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.last-item {
+  border-bottom: hidden;
+}
+
+i {
+  color: #00AA7E;
+}
+
+::ng-deep {
+  &::-webkit-scrollbar {
+    width: 0.3em !important;
+    height: 0.3em !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cecece !important;
+    border-radius: 3px !important;
+
+    &:hover {
+      background: #9a9a9a !important;
+    }
+  }
+}

@@ -1,0 +1,145 @@
+.card-info {
+  border: 1px solid #C2C2C2;
+  border-radius: 28px;
+  padding: 32px;
+  position: relative;
+  width: 100% !important;
+}
+
+.back-title {
+  background-color: #ffffff;
+  padding: 5px;
+}
+
+.pos-ab {
+  position: absolute;
+  top: -15px;
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #004F9F;
+  border-radius: 7px;
+  color: #004F9F;
+}
+
+.detail:hover {
+  background-color: #004F9F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  color: #FFFFFF;
+}
+
+.remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #DB0049;
+  border-radius: 7px;
+  color: #DB0049;
+}
+
+.remove:hover {
+  background-color: #DB0049 !important;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  color: #FFFFFF;
+}
+
+.remove:disabled {
+  background-color: #979797 !important;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: hidden;
+  border-radius: 7px;
+  color: #FFFFFF;
+}
+
+.m-18 {
+  margin-bottom: 18px;
+}
+
+.header-title {
+  position: relative;
+  width: 100%;
+  padding: 0 32px;
+}
+
+.title {
+  position: absolute;
+  top: -10px;
+  background-color: #ffffff;
+  padding: 0 5px;
+
+  p {
+    margin: 0;
+  }
+
+}
+
+hr {
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.detail-btn {
+  height: 42px;
+  width: 80px;
+}
+
+.line-height {
+  line-height: 42px;
+}
+
+.last-item {
+  border-bottom: hidden;
+}
+
+i {
+  color: #00AA7E;
+}
+
+@media (min-width: 1200px) {
+
+  .col-xl-5-3qtr {
+    -ms-flex: 0 0 47.916667%;
+    flex: 0 0 47.916667%;
+    max-width: 47.916667%;
+  }
+
+}
+
+@media (min-width: 992px) {
+
+  .col-lg-5-3qtr {
+    -ms-flex: 0 0 47.916667%;
+    flex: 0 0 47.916667%;
+    max-width: 47.916667%;
+  }
+
+}
+
+.back {
+  height: 48px;
+  color: #979797;
+  border: 1px solid #979797;
+  background-color: #FFFFFF;
+  border-radius: 14px;
+}
+
+.my-remove {
+  margin-top: auto;
+}
+
+@media (max-width: 991px) {
+  .my-remove {
+    margin-top: 24px;
+  }
+}

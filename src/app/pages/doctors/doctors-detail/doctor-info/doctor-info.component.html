@@ -1,0 +1,138 @@
+<div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+  <span><i class="spinner-border"></i></span>
+</div>
+
+<div *ngIf="!loading" class="card-info mt-input mb-4">
+  <div [formGroup]="editDocForm">
+    <p class="body2-bold col-green text-label">اطلاعات پزشک</p>
+    <div class="d-flex flex-row justify-content-end">
+      <p *ngIf="doctor?.status == 'VERIFIED'" class="body2-bold col-green text-label">فعال</p>
+      <p *ngIf="doctor?.status == 'NEW'" class="body2-bold  text-label" style="color: #F6A036">در حال بررسی</p>
+      <p *ngIf="doctor?.status == 'BANNED'" class="body2-bold  text-label" style="color:#DB0049 ">غیر فعال</p>
+    </div>
+    <div class="row display-inputs ">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box">
+        <p class="Caption1-medium col-97 text-label">نام</p>
+        <input class="body2-bold col-33" formControlName="docFirstName" type="text">
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input ">
+        <p class="Caption1-medium col-97 text-label">نام‌خانوادگی</p>
+        <input class="body2-bold col-33" formControlName="docLastName" type="text">
+      </div>
+    </div>
+
+    <div class="row display-inputs mt-div">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+        <p class="Caption1-medium col-97 text-label">تاریخ تولد</p>
+        <input (click)="picker.open()" [matDatepicker]="picker" [max]="maxDate" class="persianNum-bold-14"
+               formControlName="date" readonly type="text">
+        <mat-datepicker #picker class="persianNum-bold-14"></mat-datepicker>
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input ">
+        <p class="Caption1-medium col-97 text-label">شماره موبایل</p>
+        <input class="persianNum-bold-14 dir-ltr"
+               formControlName="mobile"
+               maxlength="11"
+               oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+               placeholder="09........."
+               style="direction: ltr"
+               type="tel">
+      </div>
+    </div>
+
+    <div class="row display-inputs mt-div">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+        <p class="Caption1-medium col-97 text-label">ایمیل</p>
+        <input class="persianNum-bold-14" formControlName="email" style="direction: ltr;" type="email">
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr select-card mt-input p-0">
+
+        <p class="Caption1-medium col-97 text-label" style="right: 11px">تخصص</p>
+        <mat-select (ngModelChange)="docFields" [(ngModel)]="docFields" [(value)]="docFields" [formControl]="toppings"
+                    [placeholder]="text" class="persianNum-bold-14 status" multiple>
+          <mat-option *ngFor="let field of fields" [value]="field.id"
+                      class="persianNum-bold-14">{{field.name}}</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <p class="title2-bold col-33" style="margin-top: 32px">اطلاعات تکمیلی</p>
+    <hr class="w-100">
+
+    <div class="row display-inputs mt-div">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+        <p class="Caption1-medium col-97 text-label"> شماره مطب </p>
+        <input class="persianNum-bold-14"
+               formControlName="officeNumber"
+               maxlength="11"
+               oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+               placeholder="021........" style="direction: ltr" type="tel">
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input  ">
+        <p class="Caption1-medium col-97 text-label">شماره شبا </p>
+        <div class="d-flex flex-row align-items-baseline justify-content-end">
+          <input class="persianNum-bold-14 dir-ltr"
+                 formControlName="sheba"
+                 maxlength="24"
+                 oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                 style="direction: ltr; width: 90% !important;"
+                 type="tel">
+          <span class="persianNum-bold-14 col-33">- IR </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row display-inputs mt-div">
+      <div
+        class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input d-flex flex-row justify-content-between align-items-baseline">
+        <p class="Caption1-medium col-97 text-label">قیمت آنلاین</p>
+        <input class="persianNum-bold-14 w-100 dir-ltr" formControlName="onlinePrice"
+               id="amount" maxlength="10" priceFormat
+               type="tel">
+        <p class="Caption2-bold col-33">تومان</p>
+      </div>
+      <div
+        class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mt-input input-box d-flex flex-row justify-content-between align-items-baseline">
+        <p class="Caption1-medium col-97 text-label">قیمت حضوری </p>
+        <input class="persianNum-bold-14 w-100 dir-ltr" formControlName="offlinePrice"
+               id="amount" maxlength="10" priceFormat
+               type="tel">
+        <p class="Caption2-bold col-33">تومان</p>
+      </div>
+    </div>
+
+    <div class="row display-inputs mt-div">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr select-card p-0 mt-input">
+        <p class="Caption1-medium col-97 text-label" style="right: 11px">بیمه </p>
+        <mat-select
+          (ngModelChange)="docInsure"
+          [(ngModel)]="docInsure" [(value)]="docInsure"
+          [formControl]="toppings2"
+          [placeholder]="text"
+          class="persianNum-bold-14 status" multiple>
+          <mat-option *ngFor="let insure of insures" [value]="insure.id"
+                      class="persianNum-bold-14">{{insure.name}}</mat-option>
+        </mat-select>
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mt-input p-0 select-card">
+        <mat-select (selectionChange)="onChange($event)" [(ngModel)]="doctor.status" [disabled]="loadingStatus"
+                    [ngClass]="{'status-processing': doctor?.status == 'NEW' , 'status-verified': doctor?.status == 'VERIFIED' , 'status-canceled': doctor?.status == 'BANNED'}"
+                    class="persianNum-bold-14" formControlName="status">
+          <mat-option class="persianNum-bold-14" style="color: #00AA7E" value="VERIFIED">فعال</mat-option>
+          <mat-option class="persianNum-bold-14" style="color: #F6A036" value="NEW">در حال بررسی</mat-option>
+          <mat-option class="persianNum-bold-14" style="color: #DB0049" value="BANNED">غیرفعال</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <div class="row display-inputs mt-div">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 input-box mt-input">
+        <p class="Caption1-medium col-97 text-label">آدرس</p>
+        <input class="persianNum-bold-14" formControlName="address" type="text">
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-center w-100" style="position: absolute; bottom: -23px;left: 0">
+    <button (click)="edit()" class="submit body1-medium">ویرایش</button>
+  </div>
+</div>

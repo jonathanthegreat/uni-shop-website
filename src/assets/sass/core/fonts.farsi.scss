@@ -1,0 +1,237 @@
+@import '_utils/colors';
+
+@font-face {
+  font-family: DanaBold;
+  src: url('../../Fonts/Dana-Bold.woff') format("woff");
+}
+
+@font-face {
+  font-family: DanaMedium;
+  src: url('../../Fonts/Dana-Medium.woff') format("woff");
+}
+
+@font-face {
+  font-family: DanaLight;
+  src: url('../../Fonts/Dana-Light.woff') format("woff");
+}
+
+@font-face {
+  font-family: DanaBoldNum;
+  src: url('../../Fonts/DanaFaNum-Bold.woff') format("woff");
+}
+
+@font-face {
+  font-family: DanaMediumNum;
+  src: url('../../Fonts/DanaFaNum-Medium.woff') format("woff");
+}
+
+@font-face {
+  font-family: DanaLightNum;
+  src: url('../../Fonts/DanaFaNum-Light.woff') format("woff");
+}
+
+.persianNum-bold-48 {
+  font-family: DanaBoldNum, sans-serif;
+  font-size: 48px;
+}
+
+.persianNum-bold-22 {
+  font-family: DanaBoldNum, sans-serif;
+  font-size: 22px;
+}
+
+.persianNum-bold-18 {
+  font-family: DanaBoldNum, sans-serif;
+  font-size: 18px;
+}
+
+.persianNum-bold-18 {
+  font-family: DanaBoldNum, sans-serif;
+  font-size: 18px;
+}
+
+.persianNum-bold-14 {
+  font-family: DanaBoldNum, sans-serif;
+  font-size: 14px;
+}
+
+.persianNum-bold-16 {
+  font-family: DanaBoldNum, sans-serif;
+  font-size: 16px;
+}
+
+.persianNum-medium-18 {
+  font-family: DanaMediumNum, sans-serif;
+  font-size: 18px;
+}
+
+.persianNum-medium-14 {
+  font-family: DanaMediumNum, sans-serif;
+  font-size: 14px;
+}
+
+.persianNum-medium-10 {
+  font-family: DanaMediumNum, sans-serif;
+  font-size: 10px;
+}
+
+.persianNum-medium-16 {
+  font-family: DanaMediumNum, sans-serif;
+  font-size: 16px;
+}
+
+.persianNum-medium-12 {
+  font-family: DanaMediumNum, sans-serif;
+  font-size: 12px;
+}
+
+.persianNum-light-18 {
+  font-family: DanaLightNum, sans-serif;
+  font-size: 18px;
+}
+
+.persianNum-light-12 {
+  font-family: DanaLightNum, sans-serif;
+  font-size: 12px;
+}
+
+.persianNum-light-14 {
+  font-family: DanaLightNum, sans-serif;
+  font-size: 14px;
+}
+
+.h1-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 48px;
+}
+
+.h1-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 48px;
+}
+
+.h1-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 48px;
+}
+
+.h2-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 32px;
+}
+
+.h2-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 32px;
+}
+
+.h2-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 32px;
+}
+
+.title1-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 22px;
+}
+
+.title1-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 22px;
+}
+
+.title1-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 22px;
+}
+
+.title2-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 18px;
+}
+
+.title2-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 18px;
+}
+
+.title2-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 18px;
+}
+
+.body1-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 16px;
+}
+
+.body1-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 16px;
+}
+
+.body1-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 16px;
+}
+
+.body2-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 14px;
+}
+
+.body2-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 14px;
+}
+
+.body2-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 14px;
+}
+
+.Caption1-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 12px;
+}
+
+.Caption1-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 12px;
+}
+
+.Caption1-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 12px;
+}
+
+.Caption2-bold {
+  font-family: DanaBold, sans-serif;
+  font-size: 10px;
+}
+
+.Caption2-medium {
+  font-family: DanaMedium, sans-serif;
+  font-size: 10px;
+}
+
+.Caption2-light {
+  font-family: DanaLight, sans-serif;
+  font-size: 10px;
+}
+
+.center {
+  text-align: unset;
+  font-family: DanaMediumNum, sans-serif;
+}
+
+.toast-container .ngx-toastr {
+  box-shadow: 0 0 12px #3b3b3b !important;
+  border-radius: 40px !important;
+  font-family: DanaMediumNum, sans-serif;
+}
+
+.apexcharts-text tspan {
+  font-family: DanaLightNum, sans-serif !important;
+  font-size: 14px !important;
+}

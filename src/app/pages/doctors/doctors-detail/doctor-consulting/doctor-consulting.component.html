@@ -1,0 +1,72 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">مشاوره ها</p>
+  </div>
+</div>
+<div class="table-body">
+  <div class="d-flex justify-content-between">
+    <mat-tab-group (selectedIndexChange)="filter($event, 'html')"
+                   style="z-index: 0; margin-left: 32px">
+      <mat-tab label="همه"></mat-tab>
+      <mat-tab label="در حال بررسی"></mat-tab>
+      <mat-tab label="تایید شده"></mat-tab>
+      <mat-tab label="انجام شده"></mat-tab>
+      <mat-tab label="لغو شده"></mat-tab>
+    </mat-tab-group>
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <!--<th scope="col">#</th>-->
+      <th scope="col">شماره نوبت</th>
+      <th scope="col">تاریخ و زمان</th>
+      <th scope="col">مبلغ</th>
+      <th scope="col">وضعیت</th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="docReserveList.content && docReserveList.content!.length > 0 && !loading"
+           class="persianNum-medium-16 line-height">
+    <tr *ngFor="let docReserve of docReserveList.content; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>{{docReserve.appointmentTime?.code || 'وارد نشده'}}</td>
+      <td>{{(docReserve.created) ? globalVariableService.convertDateToDateWithTime(docReserve.created) : 'وارد نشده'}}</td>
+      <td>{{docReserve.totalPriceFormatted || 'وارد نشده'}}</td>
+      <td *ngIf="docReserve.status == 'ALL'" class="body2-medium">
+        <div class="status-table" style="border: 1px solid #232323; color: #232323"><p>همه</p></div>
+      </td>
+      <td *ngIf="docReserve.status == 'CANCELED'" class="body2-medium">
+        <div class="status-table status-table-canceled"><p>لغو شده</p></div>
+      </td>
+      <td *ngIf="docReserve.status == 'VERIFIED'" class="body2-medium">
+        <div class="status-table status-table-verified"><p>تایید شده</p></div>
+      </td>
+      <td *ngIf="docReserve.status == 'PROCESSING'" class="body2-medium">
+        <div class="status-table status-table-processing"><p>در حال بررسی</p></div>
+      </td>
+      <td *ngIf="docReserve.status == 'DONE'" class="body2-medium">
+        <div class="status-table status-table-done"><p>انجام شده</p></div>
+      </td>
+      <td class="line-height-0">
+        <button class="green-button-outLine detail-btn"
+                routerLink="/doc-reserve/detail/{{docReserve.id}}">جزئیات
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="docReserveList.content && docReserveList.content!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">مشاوره ای وجود ندارد</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>

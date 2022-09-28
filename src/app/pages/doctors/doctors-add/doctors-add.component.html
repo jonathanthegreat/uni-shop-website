@@ -1,0 +1,140 @@
+<div [formGroup]="addForm" class="card-info mt-input mb-4">
+  <p class="body2-bold col-green text-label">افزودن پزشک</p>
+  <p class="title2-bold col-33">اطلاعات پزشک</p>
+  <hr class="w-100">
+  <div class="w-100 d-flex flex-row justify-content-center align-items-center my-4">
+    <label *ngIf="!imagUrl"
+           class="upload-image d-flex flex-row justify-content-center align-items-center cursor-pointer" for="upload">
+      <p class="body1-medium col-97 m-0">افزودن</p>
+    </label>
+    <img *ngIf="imagUrl" [src]="imagUrl" alt="image"
+         class="image-reader d-flex flex-row justify-content-center align-items-center cursor-pointer" for="upload"/>
+    <input (change)="updateImage($event)" class="d-none" id="upload" name="upload" type="file">
+  </div>
+  <div class="row display-inputs">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box">
+      <p class="Caption1-medium col-97 text-label">نام </p>
+      <input class="body2-bold col-33" formControlName="firstname" maxlength="255" type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label"> نام‌خانوادگی </p>
+      <input class="persianNum-bold-14" formControlName="lastname" maxlength="255" type="text">
+    </div>
+
+  </div>
+
+  <div class="row display-inputs mt-div">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">تاریخ تولد</p>
+      <input (click)="picker.open()" [matDatepicker]="picker" [max]="maxDate" class="persianNum-bold-14"
+             formControlName="birthday" readonly type="text">
+      <mat-datepicker #picker class="persianNum-bold-14"></mat-datepicker>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input ">
+      <p class="Caption1-medium col-97 text-label">ایمیل</p>
+      <input class="persianNum-bold-14" formControlName="email" max="50" style="direction: ltr" type="email">
+    </div>
+
+  </div>
+
+  <div class="row display-inputs mt-div">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">شماره موبایل </p>
+      <input class="persianNum-bold-14"
+             formControlName="mobile"
+             maxlength="11"
+             oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+             placeholder="09........."
+             style="direction: ltr" type="tel">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr select-card mt-input p-0">
+      <p class="Caption1-medium col-97 text-label" style="right: 11px">تخصص</p>
+      <mat-select class="persianNum-bold-14 status" formControlName="field" multiple>
+        <mat-option *ngFor="let field of fields" [value]="field.id"
+                    class="persianNum-bold-14">{{field.name}}</mat-option>
+      </mat-select>
+    </div>
+
+  </div>
+
+
+  <p class="title2-bold col-33" style="margin-top: 32px !important;">اطلاعات پزشک</p>
+  <hr class="w-100" style="margin-bottom: 41px">
+
+  <div class="row display-inputs mt-div">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label"> شماره مطب </p>
+      <input class="persianNum-bold-14"
+             formControlName="officeNumber"
+             maxlength="11"
+             oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+             placeholder="021........"
+             style="direction: ltr" type="tel">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">آدرس </p>
+      <input class="persianNum-bold-14" formControlName="address" max="1000" type="text">
+    </div>
+
+  </div>
+
+
+  <div class="row display-inputs mt-div">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label" style="right: 11px">شماره شبا </p>
+      <div class="d-flex flex-row align-items-baseline justify-content-end">
+        <input class="persianNum-bold-14" formControlName="sheba"
+               maxlength="24"
+               oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+               style="direction: ltr; width: 90% !important;" type="tel">
+        <span class="persianNum-bold-14 col-33">- IR </span>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr p-0 select-card mt-input">
+      <p class="Caption1-medium col-97 text-label" style="right: 11px">بیمه </p>
+      <mat-select class="persianNum-bold-14 status" formControlName="insure" multiple>
+        <mat-option *ngFor="let insure of insures" [value]="insure.id"
+                    class="persianNum-bold-14">{{insure.name}}</mat-option>
+      </mat-select>
+    </div>
+
+  </div>
+  <div class="row display-inputs mt-div">
+
+    <div
+      class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input d-flex flex-row justify-content-between align-items-baseline">
+      <p class="Caption1-medium col-97 text-label"> هزینه آنلاین </p>
+      <input class="persianNum-bold-14 dir-ltr" formControlName="onlinePrice"
+             id="amount" maxlength="10"
+             priceFormat type="tel">
+      <p class="Caption2-bold col-33">تومان</p>
+    </div>
+
+    <div
+      class="col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr input-box mt-input d-flex flex-row justify-content-between align-items-baseline">
+      <p class="Caption1-medium col-97 text-label">هزینه حضوری </p>
+      <input class="persianNum-bold-14 dir-ltr" formControlName="offlinePrice"
+             id="amount" maxlength="10"
+             priceFormat type="tel">
+      <p class="Caption2-bold col-33">تومان</p>
+    </div>
+
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <button (click)="createDoc()" [disabled]="addForm.invalid || loading"
+            class="btn-add body1-medium d-flex justify-content-center align-items-center">
+      افزودن
+      <span *ngIf="loading"><i class="spinner-border mx-3"></i></span>
+    </button>
+  </div>
+</div>

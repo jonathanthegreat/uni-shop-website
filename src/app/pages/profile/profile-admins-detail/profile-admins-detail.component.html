@@ -1,0 +1,62 @@
+<div [formGroup]="addForm" class="card-info">
+  <p class="body2-bold col-green text-label">ویرایش ادمین</p>
+  <div (click)="goBack()" class="col-green  d-flex flex-row justify-content-end">
+    <p class="body2-bold cursor-pointer text-label col-green">بازگشت</p>
+  </div>
+
+  <div class="row display-inputs">
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box">
+      <p class="Caption1-medium col-97 text-label">نام</p>
+      <input class="body1-medium col-33" formControlName="fname" placeholder="نام ادمین" type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box m-input">
+      <p class="Caption1-medium col-97 text-label">نام‌خانوادگی</p>
+      <input class="body1-medium col-33" formControlName="lname" placeholder="نام خانوادگی ادمین"
+             type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">نام کاربری</p>
+      <input class="body1-medium col-33" formControlName="username"
+             placeholder="username"
+             readonly style="direction: ltr" type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">ایمیل</p>
+      <input class="body1-medium col-33" formControlName="email"
+             placeholder="ex@gmail.com"
+             style="direction: ltr" type="email">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">شماره موبایل</p>
+      <input [regex]="globalVariableService.PHONE_INPUT_REGEX" class="persianNum-medium-16 col-33"
+             formControlName="mobile" maxlength="11"
+             oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+             placeholder="09........." style="direction: ltr"
+             type="tel">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12  col-lg-5-3qtr col-xl-5-3qtr input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">سطح دسترسی</p>
+      <mat-select class="body1-medium col-33" formControlName="accessLevel" placeholder="انتخاب کنید"
+                  style="margin-top: 14px">
+        <mat-option [value]="0" class="body1-medium col-33">سوپر ادمین</mat-option>
+        <mat-option [value]="1" class="body1-medium col-33">ادمین</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <button (click)="updateAdmin()"
+            [disabled]="addForm.invalid || loading || !addForm.dirty"
+            class="btn-add body1-medium d-flex justify-content-center align-items-center">
+      <span *ngIf="!loading">ویرایش</span>
+      <span *ngIf="loading"><i class="spinner-border mx-3"></i></span>
+    </button>
+  </div>
+</div>
+
+

@@ -1,0 +1,71 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">اطلاعات مالی</p>
+  </div>
+</div>
+
+<div class="table-body">
+  <div class="d-flex justify-content-start">
+    <mat-tab-group (selectedIndexChange)="filter($event)" [selectedIndex]="selectedIndex"
+                   style="z-index: 0; margin-left: 32px">
+      <mat-tab label="همه"></mat-tab>
+      <mat-tab label="موفق"></mat-tab>
+      <mat-tab label="ناموفق"></mat-tab>
+    </mat-tab-group>
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">شماره پیگیری</th>
+      <th scope="col">عنوان</th>
+      <th scope="col">بیمار</th>
+      <th scope="col">درگاه پرداخت</th>
+      <th scope="col">مبلغ</th>
+      <th scope="col">تاریخ</th>
+      <th scope="col">وضعیت</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="!loading" class="persianNum-medium-16 line-height">
+    <tr *ngFor="let transaction of transactions">
+      <td class="persianNum-medium-14">{{transaction?.reserve?.bankReferenceNumber || 'پرداخت نشده'}}</td>
+      <td class="body2-medium">رزرو جلسه</td>
+      <td
+        style="max-width: fit-content !important;">{{transaction?.reserve?.user ? (transaction?.reserve?.user?.firstName + ' ' + transaction?.reserve?.user?.lastName) : 'ثبت نشده'}}</td>
+      <td class="body2-medium">{{transaction?.reserve?.payGate?.name || 'ثبت نشده'}}</td>
+      <td class="persianNum-medium-14">{{transaction?.reserve?.totalPriceFormatted || 'ثبت نشده'}}</td>
+      <td class="persianNum-medium-14"
+          style="min-width: 130px !important;">{{transaction?.created ? globalVariableService.convertDateToDateWithTime(transaction?.created) : 'ثبت نشده'}}</td>
+      <td *ngIf="transaction?.type == 'SUCCESS'" class="body2-medium">
+        <div class="status-table status-table-verified"><p>موفق</p></div>
+      </td>
+      <td *ngIf="transaction?.type == 'FAILED'" class="body2-medium">
+        <div class="status-table status-table-canceled"><p>ناموفق</p></div>
+      </td>
+      <td *ngIf="transaction?.type == 'CANCELED'" class="body2-medium">
+        <div class="status-table status-table-canceled"><p>کنسل شده</p></div>
+      </td>
+      <td
+        *ngIf="!transaction?.type || (transaction?.type != 'SUCCESS' && transaction?.type != 'FAILED') || transaction?.type == 'UNKNOWN'"
+        class="body2-medium">
+        <div class="status-table status-table-unknown"><p>ثبت نشده</p></div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="transactions && transactions!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">تراکنشی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>
+

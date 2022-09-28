@@ -1,0 +1,87 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">ساعت کاری</p>
+  </div>
+</div>
+
+<div class="table-body" style="overflow: hidden !important;">
+  <div class="">
+    <p class="body1-bold d-flex justify-content-between">حضوری <span
+      class="persianNum-light-14">(بازه نوبت :  {{weekOFFLINE?.minutes}}  دقیقه)</span>
+    </p>
+    <hr/>
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let day of weekOFFLINE?.dayTimes">
+        <mat-expansion-panel-header>
+          <mat-panel-title *ngIf="day?.weekDays == 'SAT'" class="body1-medium color333333">شنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'SUN'" class="body1-medium color333333">یکشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'MON'" class="body1-medium color333333">دوشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'THE'" class="body1-medium color333333">سه شنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'WED'" class="body1-medium color333333">چهارشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'THU'" class="body1-medium color333333">پنجشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'FRI'" class="body1-medium color333333">جمعه</mat-panel-title>
+          <mat-panel-title *ngIf="!day?.weekDays" class="body1-medium color333333">نامعلوم</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let time of day?.startEndTimes;let lastItem = last"
+             [ngClass]="lastItem ? 'mb24' : ''" class="d-flex justify-content-between align-items-center">
+          <div
+            class="mt-input input-box d-flex flex-row justify-content-between align-items-baseline position-relative w48">
+            <p class="Caption1-medium color333333 text-label">ساعت شروع</p>
+            <input [value]="time?.startTime ? format(time?.startTime) : 'وارد نشده'"
+                   class="persianNum-bold-14 w-100 dir-ltr text-center" readonly>
+          </div>
+          <div
+            class="mt-input input-box d-flex flex-row justify-content-between align-items-baseline position-relative w48">
+            <p class="Caption1-medium color333333 text-label">ساعت پایان</p>
+            <input [value]="time?.endTime ? format(time?.endTime) : 'وارد نشده'"
+                   class="persianNum-bold-14 w-100 dir-ltr text-center" readonly>
+          </div>
+        </div>
+        <!--<hr/>-->
+      </mat-expansion-panel>
+    </mat-accordion>
+    <p class="body1-bold d-flex justify-content-between" style="margin-top: 24px">آنلاین <span
+      class="persianNum-light-14">(بازه نوبت :  {{weekONLINE?.minutes}}  دقیقه)</span>
+    </p>
+    <hr/>
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let day of weekONLINE?.dayTimes">
+        <mat-expansion-panel-header>
+          <mat-panel-title *ngIf="day?.weekDays == 'SAT'" class="body1-medium color333333">شنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'SUN'" class="body1-medium color333333">یکشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'MON'" class="body1-medium color333333">دوشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'THE'" class="body1-medium color333333">سه شنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'WED'" class="body1-medium color333333">چهارشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'THU'" class="body1-medium color333333">پنجشنبه</mat-panel-title>
+          <mat-panel-title *ngIf="day?.weekDays == 'FRI'" class="body1-medium color333333">جمعه</mat-panel-title>
+          <mat-panel-title *ngIf="!day?.weekDays" class="body1-medium color333333">نامعلوم</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let time of day?.startEndTimes;let lastItem = last"
+             [ngClass]="lastItem ? 'mb24' : ''" class="d-flex justify-content-between align-items-center">
+          <div
+            class="mt-input input-box d-flex flex-row justify-content-between align-items-baseline position-relative w48">
+            <p class="Caption1-medium color333333 text-label">ساعت شروع</p>
+            <input [value]="time?.startTime ? format(time?.startTime) : 'وارد نشده'"
+                   class="persianNum-bold-14 w-100 dir-ltr text-center" readonly>
+          </div>
+          <div
+            class="mt-input input-box d-flex flex-row justify-content-between align-items-baseline position-relative w48">
+            <p class="Caption1-medium color333333 text-label">ساعت پایان</p>
+            <input [value]="time?.endTime ? format(time?.endTime) : 'وارد نشده'"
+                   class="persianNum-bold-14 w-100 dir-ltr text-center" readonly>
+          </div>
+        </div>
+        <!--<hr/>-->
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <!--<div *ngIf="docQAList.content && docQAList.content!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">ساعتی وجود ندارد</p>
+    </div>
+  </div>-->
+</div>

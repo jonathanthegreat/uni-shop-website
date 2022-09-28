@@ -1,0 +1,43 @@
+<div [formGroup]="adminForm" class="card-info mb-5">
+  <p class="body2-bold col-green text-label">اطلاعات ادمین</p>
+
+  <div class="row display-inputs">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-half col-xl-5-half input-box">
+      <p class="Caption1-medium col-97 text-label">نام</p>
+      <input class="body1-medium col-33" formControlName="fname" placeholder="نام خود را وارد کنید" type="text">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-half col-xl-5-half input-box mt-input ">
+      <p class="Caption1-medium col-97 text-label">نام خانوادگی</p>
+      <input class="body1-medium col-33" formControlName="lname" placeholder="نام خانوادگی خود را وارد کنید"
+             type="text">
+    </div>
+  </div>
+
+  <div class="row display-inputs mt-div">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-half col-xl-5-half input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">شماره موبایل</p>
+      <input class="persianNum-medium-16 col-33"
+             formControlName="mobile"
+             maxlength="11"
+             oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+             placeholder="09........." style="direction: ltr"
+             type="tel">
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5-half col-xl-5-half input-box mt-input ">
+      <p class="Caption1-medium col-97 text-label">ایمیل</p>
+      <input class="body1-medium eng-input col-33" formControlName="email" placeholder="example@gmail.com"
+             type="text">
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center mt-3">
+    <button (click)="updateAdmin()" [disabled]="adminForm.invalid || loading || !adminForm.dirty"
+            class="btn-add body1-medium d-flex justify-content-center align-items-center">
+      <span *ngIf="!loading">ویرایش</span>
+      <span *ngIf="loading"><i class="spinner-border mx-3"></i></span>
+    </button>
+  </div>
+</div>

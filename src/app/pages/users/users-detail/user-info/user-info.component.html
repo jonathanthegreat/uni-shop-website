@@ -1,0 +1,75 @@
+<div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+  <span><i class="spinner-border"></i></span>
+</div>
+
+<div *ngIf="!loading" class="card-info mt-input">
+  <p class="body2-bold col-green text-label">اطلاعات حساب کاربری</p>
+  <div class="d-flex flex-row justify-content-end">
+    <p *ngIf="user?.status == 'VERIFIED' || user?.status == 'NEW'" class="body2-bold col-green text-label">فعال</p>
+    <p *ngIf="user?.status == 'BANNED'" class="body2-bold col-red text-label">مسدود</p>
+  </div>
+  <div class="row display-inputs ">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 input-box">
+      <p class="Caption1-medium col-97 text-label">نام و نام‌خانوادگی</p>
+      <input [value]="(user?.firstName) ? user?.firstName + ' ' + user?.lastName : 'وارد نشده' "
+             class="body2-bold col-33" readonly
+             type="text">
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">شماره موبایل</p>
+      <input [value]="(user?.mobile) ? user?.mobile : 'وارد نشده' " class="persianNum-bold-14 text-lft-dir" readonly
+             type="text">
+    </div>
+  </div>
+
+  <div class="row display-inputs mt-div ">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">تاریخ تولد</p>
+      <input
+        [value]="(user?.bdate) ? globalVariableService.convertDate(user?.bdate, 'fa' , 'jYYYY/jMM/jDD') : 'وارد نشده' "
+        class="persianNum-bold-14" readonly
+        type="text">
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 input-box mt-input ">
+      <p class="Caption1-medium col-97 text-label">ایمیل </p>
+      <input [value]="(user?.email) ? user?.email : 'وارد نشده' " class="persianNum-bold-14 text-lft-dir" readonly
+             type="text">
+    </div>
+  </div>
+
+  <div class="row display-inputs mt-div">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 input-box mt-input">
+      <p class="Caption1-medium col-97 text-label"> جنسیت </p>
+      <input *ngIf="user?.sex == 'FEMALE'" class="persianNum-bold-14" readonly type="text" value="زن">
+      <input *ngIf="user?.sex == 'MALE'" class="persianNum-bold-14" readonly type="text" value="مرد">
+      <input *ngIf="!user?.sex" class="persianNum-bold-14" readonly type="text" value="وارد نشده">
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 input-box mt-input">
+      <p class="Caption1-medium col-97 text-label">تاریخ عضویت </p>
+      <input
+        [value]="(user?.created) ? globalVariableService.convertDate(user?.created, 'fa' , 'jYYYY/jMM/jDD') : 'وارد نشده' "
+        class="persianNum-bold-14" readonly
+        type="text">
+    </div>
+  </div>
+
+  <div class="row display-inputs mt-div" style="margin-bottom: 24px">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 input-box mt-input">
+      <p class="Caption1-medium col-97 text-label"> آدرس </p>
+      <input [value]="(user?.address) ? user?.address : 'وارد نشده' " class="persianNum-bold-14" readonly type="text">
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center">
+    <mat-select (selectionChange)="updateStatus($event)" [(ngModel)]="user.status" [disabled]="updateLoading"
+                [ngClass]="{
+                  'status-verified': (user?.status == 'VERIFIED'||user?.status == 'NEW'),
+                  'status-canceled': user?.status == 'BANNED'
+                  }"
+                class="body1-medium">
+      <mat-option class="body2-medium" style="color: #00AA7E" value="VERIFIED">فعال</mat-option>
+      <mat-option class="body2-medium" style="color: #DB0049" value="BANNED">مسدود</mat-option>
+    </mat-select>
+  </div>
+
+</div>

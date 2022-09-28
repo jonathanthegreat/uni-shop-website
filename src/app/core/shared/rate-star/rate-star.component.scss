@@ -1,0 +1,20 @@
+.fa-star {
+  margin-left: 2px;
+  font-size: 16px;
+  color: #E8E8E8;
+}
+
+.checked {
+  color: #ffa634;
+}
+
+.fa-star-half {
+  position: relative;
+  z-index: 1;
+  color: #ffa634;
+  transform: translate(1px, 0px) scaleX(-1);
+}
+
+.fa-star-half + .fa-star {
+  margin-right: -20px;
+}

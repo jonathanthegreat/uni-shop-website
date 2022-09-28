@@ -1,0 +1,61 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست محتوا</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p class="col-green body2-bold cursor-pointer title" routerLink="/blog/add">افزودن محتوا</p>
+  </div>
+</div>
+<div class="table-body">
+  <div [formGroup]="searchForm" class="d-flex justify-content-end">
+    <input (ngModelChange)="searchBlogTextChanged.next($event)" [(ngModel)]="searchBlogText"
+           class="input-mom body2-medium"
+           formControlName="search" placeholder="جستجو در محتوا" style="min-width: 335px" type="search">
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">عنوان محتوا</th>
+      <th scope="col">موضوع</th>
+      <th scope="col">نویسنده</th>
+      <th scope="col">تاریخ ثبت
+        <img (click)="sort('created', 'ASC')" *ngIf="sortBy!='created'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('created', 'ASC')" *ngIf="direction=='DESC' && sortBy=='created'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('created', 'DESC')" *ngIf="direction=='ASC' && sortBy=='created'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">
+      </th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="blogs && blogs!.length > 0 && !loading" class="persianNum-medium-16 line-height">
+    <tr *ngFor="let blog of blogs; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>{{blog.title || 'ثبت نشده'}}</td>
+      <td *ngFor="let category of blog.postCategories!.slice(0,1)">{{category.title || 'ثبت نشده'}}</td>
+      <td>{{blog?.doctor ? (blog?.doctor?.firstName + ' ' + blog?.doctor?.lastName) : blog?.admin?.fname + ' ' + blog?.admin?.lname}}</td>
+      <td>{{(blog.created) ? globalVariableService.convertDateToDateWithTime(blog?.created) : 'ثبت نشده'}}</td>
+      <td class="line-height-0">
+        <button class="green-button-outLine detail-btn" routerLink="/blog/detail/{{blog.id}}">جزئیات</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="blogs && blogs!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">محتوایی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>

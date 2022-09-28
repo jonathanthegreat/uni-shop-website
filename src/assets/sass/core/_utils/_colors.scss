@@ -1,0 +1,33 @@
+$primary-green: #00AA7E;
+$primary-green-hover: #00815F;
+$primary-purple: #9F39C1;
+$primary-purple-hover: #882DA6;
+$primary-white: #FFFFFF;
+$secondary-yellow: #F6A036;
+$secondary-red: #DB0049;
+$secondary-blue: #004F9F;
+$light-gray: #D8D8D8;
+
+.col-green {
+  color: $primary-green !important;;
+}
+
+.col-97 {
+  color: #979797 !important;;
+}
+
+.col-33 {
+  color: #333333 !important;;
+}
+
+.col-purple {
+  color: #9F39C1 !important;
+}
+
+.col-40 {
+  color: #404040 !important;
+}
+
+.col-red {
+  color: $secondary-red !important;
+}

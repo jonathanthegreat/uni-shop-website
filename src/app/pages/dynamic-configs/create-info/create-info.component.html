@@ -1,0 +1,20 @@
+<div class="card">
+  <p class="col-green title body2-bold">ساخت صفحه جدید</p>
+
+  <div [formGroup]="formContent" style="margin-bottom: 32px">
+    <div class="input-box mb-input">
+      <p class="Caption1-medium col-97 text-label">نام صفحه</p>
+      <input
+        class="body1-medium" formControlName="name"
+        placeholder="نام صفحه جدید" style="padding: 0 12px"
+        type="text">
+    </div>
+    <ckeditor (ready)="onReadyCkEditor($event)" [config]="config" [editor]="Editor"
+              formControlName="content"></ckeditor>
+    <div class="d-flex flex-row justify-content-center w-100" style="position: absolute; bottom: -23px;left: 0">
+      <button (click)="create()" [disabled]="sending" class="submit body1-medium">ثبت</button>
+    </div>
+  </div>
+</div>
+
+

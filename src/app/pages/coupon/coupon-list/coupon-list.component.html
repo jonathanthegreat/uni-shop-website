@@ -1,0 +1,211 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست کد تخفیف</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p (click)="openDialog(addModal, null, null, null, null, null, null)"
+       class="col-green body2-bold cursor-pointer title">افزودن کد تخفیف</p>
+  </div>
+</div>
+<div class="table-body">
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">عنوان</th>
+      <th scope="col">کد تخفیف</th>
+      <th scope="col">نوع کد</th>
+      <th scope="col">میزان</th>
+      <th scope="col">تاریخ انقضا
+        <!--<img (click)="sort('expireDate', 'ASC')" *ngIf="sortBy!='expireDate'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('expireDate', 'ASC')" *ngIf="direction=='DESC' && sortBy=='expireDate'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('expireDate', 'DESC')" *ngIf="direction=='ASC' && sortBy=='expireDate'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">-->
+      </th>
+      <th scope="col">تعداد قابل استفاده</th>
+      <th scope="col">تعداد استفاده شده</th>
+      <th scope="col">عملیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="couponList.content && couponList.content!.length > 0 && !loading"
+           class="persianNum-medium-16 line-height">
+    <tr *ngFor="let coupon of couponList.content; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td style="max-width: fit-content !important;">{{coupon.title || 'وارد نشده'}}</td>
+      <td style="max-width: fit-content !important;">{{coupon.code || 'وارد نشده'}}</td>
+      <td>{{(coupon.type == 'PERCENT') ? 'درصد' : 'مبلغ'}}</td>
+      <td>{{coupon.value | currency:' ' :'code':'1.0' || 'وارد نشده'}}{{(coupon.type == 'PERCENT') ? '٪' : ' تومان'}}</td>
+      <td>{{(coupon.expireDate) ? globalVariableService.convertDate(coupon.expireDate, 'fa', 'jYYYY/jMM/jDD') : 'وارد نشده'}}</td>
+      <td>{{coupon.count}}</td>
+      <td>{{coupon.useCount}}</td>
+      <td>
+        <img
+          (click)="openDialog(editModal , coupon?.id, coupon?.title, coupon?.type, coupon?.value, coupon?.expireDate, coupon?.count)"
+          alt="edit" class="img-edit cursor-pointer"
+          src="assets/media/icons/insurance/edit-insurance.svg">
+        <img (click)="openDialog(deleteModal,  coupon?.id , coupon?.title, null, null, null, null)"
+             alt="delete" class="img-edit cursor-pointer"
+             src="assets/media/icons/insurance/delete-insurance.svg">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="couponList.content && couponList.content!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">کد تخفیفی وجود ندارد</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #editModal let-data>
+  <div [formGroup]="editForm">
+    <p class="body1-bold col-33">ویرایش کد تخفیف</p>
+
+    <div class="row display-inputs">
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+        <p class="Caption1-medium col-97 text-label">عنوان</p>
+        <input class="body2-medium form form-group mt-2 w-100" formControlName="title" maxlength="255"
+               placeholder="عنوان کد تخفیف را وارد نمایید">
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mb-2">
+        <p class="Caption1-medium col-97 text-label">نوع</p>
+        <!--<input class="body2-medium form form-group mt-2 w-100" formControlName="name" placeholder="نوع کد تخفیف را انتخاب کنید">-->
+        <mat-select (selectionChange)="onTypeChange($event)" [(ngModel)]="data.couponType" [disabled]="loadingAdd"
+                    class="body2-medium form form-group w-100" formControlName="type"
+                    placeholder="نوع کد تخفیف را انتخاب کنید"
+                    style="margin-top: 13px">
+          <mat-option class="body2-medium" value="PERCENT">درصد</mat-option>
+          <mat-option class="body2-medium" value="VALUE">مبلغ</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mb-2">
+        <p
+          class="Caption1-medium col-97 text-label">{{(couponType == 'PERCENT' || data.couponType == 'PERCENT') ? 'درصد' : 'مبلغ'}}</p>
+        <input
+          [placeholder]="(couponType == 'PERCENT' || data.couponType == 'PERCENT') ? 'درصد کد تخفیف را وارد کنید': 'مبلغ کد تخفیف را وارد کنید'"
+          [regex]="(couponType == 'PERCENT' || data.couponType == 'PERCENT') ? globalVariableService.PERCENTAGE_REGEX :globalVariableService.AMOUNT_REGEX"
+          class="persianNum-medium-14 form form-group mt-2 w-100"
+          formControlName="value"
+          type="number">
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr">
+        <p class="Caption1-medium col-97 text-label">تاریخ انقضا</p>
+        <!--<input class="body2-medium form form-group mt-2 w-100" formControlName="name"
+               placeholder="تاریخ انقضا را انتخاب کنید">-->
+        <input
+          (click)="picker.open()"
+          [matDatepicker]="picker" [min]="minDate" class="persianNum-medium-14 form form-group w-100"
+          formControlName="expireDate" placeholder="تاریخ انقضا را انتخاب کنید"
+          readonly
+          style="margin-top: 11px"
+          type="text">
+        <mat-datepicker #picker class="persianNum-medium-14"></mat-datepicker>
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr">
+        <p class="Caption1-medium col-97 text-label">تعداد استفاده</p>
+        <input [regex]="globalVariableService.AMOUNT_REGEX" class="persianNum-medium-14 form form-group mt-2 w-100"
+               formControlName="count" maxlength="4" placeholder="حداکثر تعداد استفاده مجاز از کد"
+               type="number">
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="editField(data.couponId)" [disabled]="loadingAdd || editForm.invalid || !editForm.dirty"
+              class="edit body2-medium">
+        <span *ngIf="!loadingAdd">بروزرسانی</span>
+        <span *ngIf="loadingAdd"><i class="spinner spinner-warning"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addModal let-data>
+  <div [formGroup]="addForm">
+    <p class="body1-bold col-33">افزودن کد تخفیف</p>
+
+    <div class="row display-inputs">
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+        <p class="Caption1-medium col-97 text-label">عنوان</p>
+        <input class="body2-medium form form-group mt-2 w-100" formControlName="title" maxlength="255"
+               placeholder="عنوان کد تخفیف را وارد نمایید">
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mb-2">
+        <p class="Caption1-medium col-97 text-label">نوع</p>
+        <!--<input class="body2-medium form form-group mt-2 w-100" formControlName="name" placeholder="نوع کد تخفیف را انتخاب کنید">-->
+        <mat-select (selectionChange)="onTypeChange($event)" [(ngModel)]="data.couponType" [disabled]="loadingAdd"
+                    class="body2-medium form form-group w-100" formControlName="type"
+                    placeholder="نوع کد تخفیف را انتخاب کنید"
+                    style="margin-top: 13px">
+          <mat-option class="body2-medium" value="PERCENT">درصد</mat-option>
+          <mat-option class="body2-medium" value="VALUE">مبلغ</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr mb-2">
+        <p
+          class="Caption1-medium col-97 text-label">{{(couponType == 'PERCENT' || data.couponType == 'PERCENT') ? 'درصد' : 'مبلغ'}}</p>
+        <input [attr.disabled]="disabled ? '' : null"
+               [placeholder]="(couponType == 'PERCENT' || data.couponType == 'PERCENT') ? 'درصد کد تخفیف را وارد کنید': 'مبلغ کد تخفیف را وارد کنید'"
+               [regex]="(couponType == 'PERCENT' || data.couponType == 'PERCENT') ? globalVariableService.PERCENTAGE_REGEX :globalVariableService.AMOUNT_REGEX"
+               class="persianNum-medium-14 form form-group mt-2 w-100"
+               formControlName="value"
+               type="number">
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr">
+        <p class="Caption1-medium col-97 text-label">تاریخ انقضا</p>
+        <!--<input class="body2-medium form form-group mt-2 w-100" formControlName="name"
+               placeholder="تاریخ انقضا را انتخاب کنید">-->
+        <input
+          (click)="picker.open()"
+          [matDatepicker]="picker" [min]="minDate" class="persianNum-medium-14 form form-group w-100 cursor-pointer"
+          formControlName="expireDate" placeholder="تاریخ انقضا را انتخاب کنید"
+          readonly
+          style="margin-top: 11px"
+          type="text">
+        <mat-datepicker #picker class="persianNum-medium-14"></mat-datepicker>
+      </div>
+
+      <div class="input-box col-12 col-sm-12 col-md-12 col-lg-5-3qtr col-xl-5-3qtr">
+        <p class="Caption1-medium col-97 text-label">تعداد استفاده</p>
+        <input [regex]="globalVariableService.AMOUNT_REGEX" class="persianNum-medium-14 form form-group mt-2 w-100"
+               formControlName="count" maxlength="4" placeholder="حداکثر تعداد استفاده مجاز از کد"
+               type="number">
+      </div>
+    </div>
+
+
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="createField()" [disabled]="loadingAdd || addForm.invalid" class="add body2-medium">
+        <span *ngIf="!loadingAdd">افزودن</span>
+        <span *ngIf="loadingAdd"><i class="spinner-border"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-data>
+  <p class="body1-bold col-33">حذف کد تخفیف</p>
+  <p class="mt-2 body2-bold col-40 mt-1">آیا از حذف "{{data?.couponName}}" مطمئن هستید؟</p>
+  <div class="d-flex flex-row justify-content-between mt-4">
+    <button (click)="close()" class="back body2-medium">بازگشت</button>
+    <button (click)="removeField(data?.couponId)" [disabled]="loadingAdd" class="delete-insur body2-medium">
+      <span *ngIf="!loadingAdd">حذف</span>
+      <span *ngIf="loadingAdd"><i class="spinner spinner-danger"></i></span>
+    </button>
+  </div>
+</ng-template>

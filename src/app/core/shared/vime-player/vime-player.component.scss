@@ -1,0 +1,21 @@
+::ng-deep {
+
+  vm-player {
+    --vm-media-z-index: 0;
+    --vm-blocker-z-index: 1;
+    --vm-ui-z-index: 1;
+    --vm-loading-screen-z-index: 1;
+    --vm-poster-z-index: 1;
+    --vm-scrim-z-index: 1;
+    --vm-click-to-play-z-index: 1;
+    --vm-dbl-click-fullscreen-z-index: 1;
+    --vm-captions-z-index: 1;
+    --vm-spinner-z-index: 1;
+    --vm-controls-z-index: 1;
+    --vm-tooltip-z-index: 1;
+    --vm-menu-z-index: 1;
+    --vm-skeleton-z-index: 1;
+    --vm-player-border-radius: 20px;
+  }
+
+}

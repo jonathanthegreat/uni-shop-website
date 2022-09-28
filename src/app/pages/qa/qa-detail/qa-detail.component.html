@@ -1,0 +1,88 @@
+<div class="table-body" style="overflow: hidden !important;">
+  <div class="d-flex justify-content-between align-items-center row">
+    <div class="d-flex col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-input">
+      <img alt="back" class="back-icon" routerLink="/qa/list" src="assets/media/images/svg/comment/back.svg">
+      <p class="title2-bold col-33 m-0">جزئیات پرسش {{qa?.code}}</p>
+    </div>
+    <div *ngIf="!loading" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-select d-flex justify-content-end">
+      <mat-select (selectionChange)="onChange($event)" [(ngModel)]="qa.status"
+                  [disabled]="loading" [ngClass]="{
+                  'status-verified': qa?.status == 'VERIFIED',
+                  'status-processing': qa?.status == 'NEW',
+                  'status-canceled': qa?.status == 'REJECTED'
+                  }"
+                  class="body1-medium">
+        <mat-option class="body2-medium" style="color: #F6A036" value="NEW">در حال بررسی</mat-option>
+        <mat-option class="body2-medium" style="color: #00AA7E" value="VERIFIED">تایید شده</mat-option>
+        <mat-option class="body2-medium" style="color: #DB0049" value="REJECTED">رد شده</mat-option>
+      </mat-select>
+    </div>
+  </div>
+  <hr>
+  <div *ngIf="!loading">
+    <div class="d-flex flex-column mt-2">
+      <div class="d-flex flex-row justify-content-end">
+        <p class="col-97 persianNum-medium-14 mb-0 "
+           style="margin-left: 30px; margin-right: 50px;margin-top: 5px">{{globalVariableService.convertDate(qa.created, 'fa', 'jYYYY/jMM/jDD')}}</p>
+      </div>
+      <p
+        class="body2-medium text-color-404040 mb-0">{{qa?.user?.firstName + ' ' + qa?.user?.lastName}}
+        پرسیده</p>
+      <p class="body1-bold col-33 mt-2">{{qa.subject ? qa.subject : 'وارد نشده'}}</p>
+      <p class="body1-bold mt-4">سوال:</p>
+      <p class="body2-medium col-33">{{qa.question ? qa.question : 'وارد نشده'}}</p>
+      <div *ngIf="qa.topics && qa.topics.length>0" class="d-flex flex-row mt-2">
+        <div *ngFor="let topic of qa.topics; first as isFirst" [ngClass]="{ 'first' : isFirst }"
+             class="tag body2-light mx-2">
+          {{topic?.name ? topic?.name : 'وارد نشده'}}
+        </div>
+      </div>
+    </div>
+    <hr *ngIf="answers && answers.length > 0"/>
+    <div *ngFor="let answer Of answers;let lastItem = last" class="d-flex flex-column mt-4">
+      <div class="d-flex">
+        <div id="cont">
+          <img
+            [src]="(answer?.doctor?.profileImage) ? answer?.doctor?.profileImage : 'assets/media/images/svg/doctorslist/Profile_placeHolder.png'"
+            alt="placeHolder"
+            id="box">
+        </div>
+        <div class="d-flex flex-column mx-3">
+          <p [routerLink]="'/doctors/detail/' + answer?.doctor?.id"
+             class="mb-0 col-green body2-bold cursor-pointer">{{(answer?.doctor?.firstName) ? answer?.doctor?.firstName + ' ' + answer?.doctor?.lastName : 'ارد نشده'}}</p>
+          <p *ngFor="let fields of answer.doctor?.medicalFields" class="mb-0 col-33 Caption1-medium"
+             style="margin-top: 8px">{{(fields?.name) ? fields?.name : 'وارد نشده'}}</p>
+          <p *ngIf="answer?.doctor?.medicalFields?.length == 0 " class="mb-0 col-33 Caption1-medium"> وارد نشده </p>
+          <div class="d-flex flex-row" style="margin-top: 8px">
+            <img alt="star" src="assets/media/images/svg/q-a/star.svg">
+            <p class="mb-0 col-33 persianNum-medium-12 mx-2">{{(answer?.doctor?.rate) ? answer?.doctor?.rate : '5'}}
+              / 5</p>
+          </div>
+        </div>
+      </div>
+      <p
+        class="body2-light col-33 mt-4 text-break"> {{(answer?.answer) ? answer?.answer : 'وارد نشده'}}</p>
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 12px">
+        <div class="d-flex flex-row" style="width: 105%;">
+          <div
+            class="body1-medium regular-like d-flex flex-row justify-content-between align-items-center">
+            <img alt="unlike" class="w32px"
+                 src="assets/media/images/svg/q-a/Like_outLine.svg">
+            <p class="mb-0" style="margin-top: 5px">{{(answer?.likeCount) ? answer?.likeCount : '0'}}</p>
+          </div>
+          <div
+            class="body1-medium regular-disLike d-flex flex-row justify-content-between mx-3 align-items-center">
+            <img alt="un-dislike" class="w32px"
+                 src="assets/media/images/svg/q-a/dissLike_outLine.svg">
+            <p class="mb-0" style="margin-top: 5px">{{qa?.disLikeCount ? qa?.disLikeCount : '0'}}</p>
+          </div>
+        </div>
+      </div>
+      <hr *ngIf="!lastItem"/>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border col-green"></i></span>
+  </div>
+</div>

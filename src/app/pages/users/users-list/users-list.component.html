@@ -1,0 +1,93 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست کاربران</p>
+  </div>
+</div>
+<div class="table-body">
+  <div [formGroup]="searchForm" class="d-flex justify-content-between">
+    <mat-tab-group (selectedIndexChange)="filter($event, 'html')" [selectedIndex]="selectedIndex"
+                   style="z-index: 0; margin-left: 32px">
+      <mat-tab label="همه"></mat-tab>
+      <mat-tab label="فعال"></mat-tab>
+      <mat-tab label="مسدود"></mat-tab>
+    </mat-tab-group>
+    <input (ngModelChange)="searchUserTextChanged.next($event)" [(ngModel)]="searchUserText"
+           class="input-mom body2-medium"
+           formControlName="search" placeholder="جستجو در کاربران" style="min-width: 335px" type="search">
+  </div>
+  <hr>
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <!--<th scope="col">#</th>-->
+      <th scope="col">عکس</th>
+      <th scope="col">نام کاربر</th>
+      <th scope="col">تاریخ تولد
+        <img (click)="sort('bDate', 'ASC')" *ngIf="sortBy!='bDate'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('bDate', 'ASC')" *ngIf="direction=='DESC' && sortBy=='bDate'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('bDate', 'DESC')" *ngIf="direction=='ASC' && sortBy=='bDate'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">
+      </th>
+      <th scope="col">شماره تماس</th>
+      <th scope="col">تاریخ عضویت
+        <img (click)="sort('created', 'ASC')" *ngIf="sortBy!='created'" alt="sort" class="cursor-pointer"
+             src="assets/media/icons/sort.svg">
+        <img (click)="sort('created', 'ASC')" *ngIf="direction=='DESC' && sortBy=='created'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-down.svg">
+        <img (click)="sort('created', 'DESC')" *ngIf="direction=='ASC' && sortBy=='created'" alt="sort"
+             class="cursor-pointer"
+             src="assets/media/icons/sort-up.svg">
+      </th>
+      <th scope="col">وضعیت</th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="users.content && users.content!.length > 0 && !loading" class="persianNum-medium-16 line-height">
+    <tr *ngFor="let user of users.content; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <!--<th scope="row">{{(i + 1) + ((page - 1) * pageSize) }}</th>-->
+      <td>
+        <div class="doc-img-body d-flex justify-content-center align-items-center">
+          <img
+            [src]="(user.profileImage) ? (user.profileImage) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+            alt="img" class="doc-img">
+        </div>
+      </td>
+      <td>{{(user.firstName + ' ' + user.lastName) || 'وارد نشده'}}</td>
+      <td>{{(user.bdate) ? globalVariableService.convertDate(user.bdate, 'fa', 'jYYYY/jMM/jDD') : 'وارد نشده'}}</td>
+      <td>{{user.mobile || 'وارد نشده'}}</td>
+      <td>{{globalVariableService.convertDate(user.created, 'fa', 'jYYYY/jMM/jDD') || 'وارد نشده'}}</td>
+      <td *ngIf="user.status == 'ALL'" class="body2-medium">
+        <div class="status-table" style="border: 1px solid #333333; color: #333333"><p>همه</p></div>
+      </td>
+      <td *ngIf="user.status == 'BANNED'" class="body2-medium">
+        <div class="status-table" style="border: 1px solid #DB0049; color: #DB0049"><p>مسدود</p></div>
+      </td>
+      <td *ngIf="user.status == 'VERIFIED' || user.status == 'NEW'" class="body2-medium">
+        <div class="status-table" style="border: 1px solid #00AA7E; color: #00AA7E"><p>فعال</p></div>
+      </td>
+      <td class="line-height-0">
+        <button class="green-button-outLine detail-btn" routerLink="/users/detail/{{user.id}}">جزئیات</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="users.content && users.content!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">کاربری وجود ندارد</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="total > 0 && !loading" class="paginator-body mt-3">
+  <app-pagination (pageChange)="changePage($event)" [current]="page + 1" [siblings]="2"
+                  [total]="total"></app-pagination>
+</div>

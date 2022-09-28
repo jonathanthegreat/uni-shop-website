@@ -1,0 +1,40 @@
+<div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+  <span><i class="spinner-border"></i></span>
+</div>
+<div *ngIf="!loading" class="row d-flex justify-content-between">
+  <div class="card-user col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 d-flex flex-column ">
+    <div class="d-flex flex-row justify-content-start">
+      <div class="doc-img-body">
+        <img
+          [src]="(user.profileImage)  ?  user.profileImage : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+          alt="img"
+          class="doc-img">
+      </div>
+      <div>
+        <p class="body2-bold col-33"
+           style="margin-right: 12px ">{{user?.firstName ? (user?.firstName + ' ' + user?.lastName) : 'وارد نشده'}}</p>
+        <p class="persianNum-medium-12 col-33 mt-2"
+           style="margin-right: 12px ">{{user?.mobile ? user?.mobile : 'وارد نشده'}}</p>
+      </div>
+    </div>
+    <div [routerLinkActiveOptions]="{exact: true}" class="item-nav body2-medium mt-4"
+         routerLink="/users/detail/{{user?.id}}"
+         routerLinkActive="item-nav-active"><p>اطلاعات حساب کاربری</p></div>
+    <div class="item-nav body2-medium mt-2" routerLink="/users/detail/{{user?.id}}/medical-info"
+         routerLinkActive="item-nav-active"><p>اطلاعات پزشکی</p></div>
+    <div class="item-nav body2-medium mt-2" routerLink="/users/detail/{{user?.id}}/financial-info"
+         routerLinkActive="item-nav-active"><p>اطلاعات مالی</p></div>
+    <div class="item-nav body2-medium mt-2" routerLink="/users/detail/{{user?.id}}/consulting"
+         routerLinkActive="item-nav-active"><p>
+      مشاوره ها</p></div>
+    <div class="item-nav body2-medium mt-2" routerLink="/users/detail/{{user?.id}}/question"
+         routerLinkActive="item-nav-active"><p>
+      پرسش و پاسخ‌ها</p></div>
+    <div class="item-nav body2-medium mt-2" routerLink="/users/detail/{{user?.id}}/comment"
+         routerLinkActive="item-nav-active"><p>
+      نظرات </p></div>
+  </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-8-half col-xl-8-half d-flex flex-column res">
+    <router-outlet></router-outlet>
+  </div>
+</div>

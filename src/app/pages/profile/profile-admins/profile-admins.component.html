@@ -1,0 +1,49 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست ادمین‌ها</p>
+  </div>
+  <div *ngIf="currentAdmin.accessLevel == 0" class="d-flex flex-row justify-content-end">
+    <p class="col-green body2-bold cursor-pointer title" routerLink="/profile/admins/add">افزودن ادمین</p>
+  </div>
+</div>
+<div class="table-body">
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <table *ngIf="admins && admins.length > 0 && !loading" class="w-100 table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">عکس</th>
+      <th scope="col">نام ادمین</th>
+      <th scope="col">سطح دسترسی</th>
+      <th scope="col">موبایل</th>
+      <th scope="col">تاریخ عضویت</th>
+      <th scope="col">جزئیات</th>
+    </tr>
+    </thead>
+    <tbody class="persianNum-medium-16 line-height">
+    <tr *ngFor="let admin of admins; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>
+        <div class="doc-img-body d-flex justify-content-center align-items-center">
+          <img
+            [src]="(admin.profileImageAddress) ? (admin.profileImageAddress) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+            alt="img" class="doc-img">
+        </div>
+      </td>
+      <td>{{(admin.fname && admin.lname) ? (admin.fname + ' ' + admin.lname) : 'وارد نشده'}}</td>
+      <td>{{(admin.accessLevel == 0) ? 'سوپر ادمین' : 'ادمین'}}</td>
+      <td>{{admin.phoneNumber ? admin.phoneNumber : 'وارد نشده'}}</td>
+      <td>{{admin.created ? globalVariableService.convertDate(admin.created, 'fa', 'jYYYY-jMM-jDD') : 'وارد نشده'}}</td>
+      <td class="line-height-0">
+        <button [routerLink]="'/profile/admins/detail/' + admin.id" class="green-button-outLine detail-btn">جزئیات
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="((admins && admins.length <= 0) || !admins) && !loading" class="persianNum-medium-16 text-center">ادمینی
+    وجود ندارد</p>
+
+</div>

@@ -1,0 +1,140 @@
+<div class="header-title">
+  <div class="d-flex flex-row justify-content-start">
+    <p class="col-green body2-bold title">لیست بیمه</p>
+  </div>
+  <div class="d-flex flex-row justify-content-end">
+    <p (click)="openDialog(add, null, null, null)" class="col-green body2-bold cursor-pointer title">افزودن بیمه</p>
+  </div>
+</div>
+<div class="table-body">
+  <table class="table" style="white-space: nowrap">
+    <thead class="title1-light">
+    <tr>
+      <th scope="col">ردیف</th>
+      <th scope="col">لوگو</th>
+      <th scope="col">عنوان بیمه</th>
+      <th scope="col">تاریخ ساخت</th>
+      <th scope="col">عملیات</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="insuranceList && insuranceList!.length > 0 && !loading"
+           class="persianNum-medium-16 line-height">
+    <tr *ngFor="let insurance of insuranceList; let i = index; let lastItem = last"
+        [ngClass]="lastItem == true? 'last-item' : ''">
+      <td>{{i + 1}}</td>
+      <td>
+        <img
+          [src]="(insurance?.logo) ? (insurance?.logo) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+          alt="img" class="logo-img">
+      </td>
+      <td>{{insurance.name || 'وارد نشده'}}</td>
+      <td>{{(insurance.created) ? globalVariableService.convertDateToDateWithTime(insurance?.created) : 'وارد نشده'}}</td>
+      <td>
+        <img (click)="openDialog(edit , insurance?.id, insurance?.name, insurance?.logo)"
+             class="img-edit cursor-pointer"
+             src="assets/media/icons/insurance/edit-insurance.svg">
+        <img (click)="openDialog(deleteModal,  insurance?.id , insurance?.name, null)" class="img-edit cursor-pointer"
+             src="assets/media/icons/insurance/delete-insurance.svg">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="loading" class="mt-5 mb-5 d-flex justify-content-center">
+    <span><i class="spinner-border"></i></span>
+  </div>
+  <div *ngIf="insuranceList && insuranceList!.length == 0 && !loading" class="body2-medium">
+    <div class="d-flex justify-content-center align-items-center flex-column">
+      <img alt="not-found" src="assets/media/images/svg/errors/not-found.svg" style="width: 25%"/>
+      <p class="persianNum-medium-16" style="text-align: center;margin: 24px 0 0 0;">بیمه ای وجود ندارد</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #edit let-data>
+  <div [formGroup]="editForm">
+    <p class="body1-bold col-33">ویرایش بیمه</p>
+    <label class="d-flex justify-content-center align-items-center w-100 mb-2 cursor-pointer" for="update">
+      <div class="edit-logo-img-body">
+        <img *ngIf="!newLogo"
+             [src]="(data.fieldsLogo) ? (data.fieldsLogo) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+             alt="img" class="edit-logo-img">
+        <img *ngIf="newLogo" [src]="(imageSrc) ? (imageSrc) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+             alt="img" class="edit-logo-img">
+      </div>
+    </label>
+    <div class="input-box">
+      <p class="Caption1-medium col-97 text-label">نام بیمه</p>
+      <input class="body2-medium form form-group mt-2 w-100" formControlName="name" placeholder="نام بیمه" required>
+    </div>
+    <label class="form form-group upload-input" data-action="change" data-toggle="tooltip">
+      <p class="col-97 body1-medium upload-text">آپلود فایل لوگو بیمه</p>
+      <!--      <p *ngIf="!logo" class="col-97 body1-medium upload-text">آپلود فایل لوگو بیمه</p>
+            <div *ngIf="logo" class="d-flex justify-content-center p-2">
+              <img alt="uploaded" src="assets/media/icons/insurance/check.svg" style="width: 30px; height: 30px;">
+              <p class="col-97 body1-medium m-0 line-height-xl">فایل انتخاب شد</p>
+            </div>-->
+      <input (change)="uploadLogo($event, 'editForm'); readURL($event)" [disabled]="sendingImage"
+             accept="image/png,image/jpg,image/jpeg" class="d-none"
+             id="update" type="file"/>
+    </label>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="editField(data.fieldsId)" [disabled]="loadingAdd" class="edit body2-medium">
+        <span *ngIf="!loadingAdd">بروزرسانی</span>
+        <span *ngIf="loadingAdd"><i class="spinner spinner-warning"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #add let-data>
+  <div [formGroup]="addForm">
+    <p class="body1-bold col-33">افزودن بیمه</p>
+    <label class="d-flex justify-content-center align-items-center w-100 mb-2 cursor-pointer" for="create">
+      <div class="edit-logo-img-body">
+        <img *ngIf="!newLogo"
+             [src]="(data.fieldsLogo) ? (data.fieldsLogo) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+             alt="img" class="edit-logo-img">
+        <img *ngIf="newLogo" [src]="(imageSrc) ? (imageSrc) : 'assets/media/images/svg/doctor/profile-placeholder.png'"
+             alt="img" class="edit-logo-img">
+      </div>
+    </label>
+    <div class="input-box">
+      <p class="Caption1-medium col-97 text-label">نام بیمه</p>
+      <input class="body2-medium form form-group mt-2 w-100" formControlName="name" placeholder="نام بیمه را وارد کنید">
+    </div>
+    <label class="form form-group upload-input" data-action="change"
+           data-toggle="tooltip">
+      <p *ngIf="!newLogo" class="col-97 body1-medium upload-text">آپلود فایل لوگو بیمه</p>
+      <p *ngIf="newLogo" class="col-97 body1-medium upload-text">فایل انتخاب شد</p>
+      <!--      <p *ngIf="!logo" class="col-97 body1-medium upload-text">آپلود فایل لوگو بیمه</p>
+            <div *ngIf="logo" class="d-flex justify-content-center p-2">
+              <img alt="uploaded" src="assets/media/icons/insurance/check.svg" style="width: 30px; height: 30px;">
+              <p class="col-97 body1-medium m-0 line-height-xl">فایل انتخاب شد</p>
+            </div>-->
+      <input (change)="uploadLogo($event, 'editForm'); readURL($event)" [disabled]="sendingImage"
+             accept="image/png,image/jpg,image/jpeg"
+             class="d-none"
+             id="create" type="file"/>
+    </label>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <button (click)="close()" class="back body2-medium">بازگشت</button>
+      <button (click)="createField()" [disabled]="loadingAdd" class="add body2-medium">
+        <span *ngIf="!loadingAdd">تایید</span>
+        <span *ngIf="loadingAdd"><i class="spinner-border"></i></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-data>
+  <p class="body1-bold col-33">حذف بیمه</p>
+  <p class="mt-2 body2-bold col-40 mt-1">آیا از حذف "{{data?.fieldsName}}" مطمئن هستید؟</p>
+  <div class="d-flex flex-row justify-content-between mt-4">
+    <button (click)="close()" class="back body2-medium">بازگشت</button>
+    <button (click)="removeField(data?.fieldsId)" [disabled]="loadingAdd" class="delete-insur body2-medium">
+      <span *ngIf="!loadingAdd">حذف</span>
+      <span *ngIf="loadingAdd"><i class="spinner spinner-danger"></i></span>
+    </button>
+  </div>
+</ng-template>
